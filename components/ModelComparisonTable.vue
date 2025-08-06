@@ -9,8 +9,8 @@
         <thead>
           <tr>
             <th>Benchmark</th>
-            <th>gpt-oss-120b</th>
-            <th>gpt-oss-20b</th>
+            <th>GPT-OSS-120b</th>
+            <th>GPT-OSS-20b</th>
             <th>OpenAI o3</th>
             <th>OpenAI o4-mini</th>
           </tr>
