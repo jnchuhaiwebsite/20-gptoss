@@ -65,13 +65,41 @@ p {
   box-shadow: 0 4px 15px rgba(97, 94, 255, 0.4);
 }
 
+/* 移动端优化 */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2.5rem;
+  .hero {
+    padding: 3rem 1rem;
   }
   
+  h1 {
+    font-size: 2rem;
+    white-space: normal;
+    line-height: 1.2;
+  }
+  
+  p {
+    font-size: 1rem;
+    max-width: 100%;
+    margin: 1rem auto 1.5rem;
+  }
+  
+  .cta-button {
+    font-size: 1rem;
+    padding: 0.7rem 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
   .hero {
-    padding: 4rem 1.5rem;
+    padding: 2.5rem 0.75rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  p {
+    font-size: 0.95rem;
   }
 }
 </style> 

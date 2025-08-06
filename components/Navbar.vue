@@ -297,4 +297,47 @@ onUnmounted(() => {
 .hover-text-theme:hover {
   color: var(--baby-coral) !important;
 }
+
+/* 移动端菜单动画 */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .max-w-7xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .h-20 {
+    height: 4rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .max-w-7xl {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .h-20 {
+    height: 3.5rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+}
 </style> 

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <main>
+    <main class="mobile-optimized">
       <!-- 主功能区 -->
       <!-- <GptOssHero /> -->
       
@@ -90,5 +90,22 @@ onUnmounted(() => {
 <style scoped>
 html {
   scroll-behavior: smooth;
+}
+
+/* 移动端优化 */
+.mobile-optimized {
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .min-h-screen {
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .min-h-screen {
+    min-height: 100vh;
+  }
 }
 </style>

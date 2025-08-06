@@ -27,3 +27,45 @@ button {
   border: none;
   outline: none;
 }
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  section {
+    scroll-margin-top: 64px;
+  }
+  
+  * {
+    scroll-margin-top: 64px;
+  }
+  
+  /* 改善移动端触摸体验 */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* 防止移动端缩放 */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* 改善移动端滚动 */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* 防止移动端水平滚动 */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    scroll-margin-top: 56px;
+  }
+  
+  * {
+    scroll-margin-top: 56px;
+  }
+}

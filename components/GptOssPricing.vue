@@ -119,12 +119,62 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  
   h2 {
     font-size: 1.8rem;
   }
   
   .subtitle {
     font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .table-wrapper {
+    border-radius: 8px;
+    margin: 0 -0.5rem;
+  }
+  
+  .styled-table th, .styled-table td {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .styled-table th {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .container {
+    padding: 1rem 0.5rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  .subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .styled-table th, .styled-table td {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  .styled-table th {
+    font-size: 0.75rem;
   }
 }
 </style> 
