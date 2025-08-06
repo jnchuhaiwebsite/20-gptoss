@@ -6,20 +6,23 @@
     </p>
     <div class="grid">
       <div class="card">
-        <h3>Private System Inference</h3>
-        <p>Your data is processed in your environment. We never connect to external APIs, ensuring total data privacy.</p>
+          <h3><span>🛡️</span>Airtight Data Privacy</h3>
+          <p>Your conversations and data never leave your control. All inference runs in your private environment or on-premise, with <strong>zero external API calls</strong>. This is our non-negotiable promise of security.</p>
       </div>
+      
       <div class="card">
-        <h3>Powerful Multi-Step Logic</h3>
-        <p>Powered by chain-of-thought, GPT-OSS excels at complex problems with transparent, verifiable reasoning.</p>
+          <h3><span>🧠</span>Transparent & Powerful Logic</h3>
+          <p>Go beyond simple answers. GPT-OSS uses chain-of-thought to tackle complex problems, showing you its reasoning step-by-step. This makes outputs not only smarter but also fully verifiable.</p>
       </div>
+
       <div class="card">
-        <h3>Flexible Deployment</h3>
-        <p>Optimized for a range of hardware, from powerful servers to local workstations, adapting to your infrastructure.</p>
+          <h3><span>✅</span>Auditable & Responsible by Design</h3>
+          <p>Trust is built-in. With features like <strong>reasoning path visualization</strong>, simulated abuse testing, and external expert audits, GPT-OSS provides the tools you need for safe and responsible deployment.</p>
       </div>
+
       <div class="card">
-        <h3>Commercial-Friendly License</h3>
-        <p>The Apache 2.0 license gives you the freedom to build, modify, and deploy commercial applications.</p>
+          <h3><span>💼</span>Unrestricted Commercial Use</h3>
+          <p>Innovate without limits. The content you generate is yours to commercialize. Our <strong>business-friendly license</strong> empowers you to build products and services on GPT-OSS with legal peace of mind.</p>
       </div>
     </div>
   </section>
