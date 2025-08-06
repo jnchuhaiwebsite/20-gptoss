@@ -1,7 +1,7 @@
 <template>
   <header id="intro" class="hero mt-[80px]">
     <div class="container ">
-      <h1>Introducing GPT-OSS: A New Era of Open AI</h1>
+      <h1>GPT-OSS: A New Era of Open AI</h1>
     <p>
       Expertise You Can Download. Released on August 5, 2025, GPT-OSS marks OpenAI's return to open-weight models. 
       It includes <strong>gpt-oss-120B</strong> and <strong>gpt-oss-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
@@ -31,10 +31,12 @@
 
 h1 {
   font-size: 3.2rem;
-  margin: 0;
+  margin: 0 auto 1rem;
   line-height: 1.3;
   font-weight: 700;
-  margin-bottom: 1rem;
+  white-space: nowrap;
+  text-align: center;
+  display: block;
 }
 
 p {
