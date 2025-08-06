@@ -4,8 +4,8 @@ import { useRuntimeConfig } from 'nuxt/app'
 // console.log('当前环境:', process.env.NODE_ENV);
 
 const baseUrl = process.env.NODE_ENV === 'development'
-  ? 'https://art.www.gptoss2.com'
-  : 'https://art.www.gptoss2.com';
+  ? 'https://art.gptoss2.com'
+  : 'https://art.gptoss2.com';
 
 // const baseUrl = 'https://art.aimagen43.com';
 // const baseUrl = 'http://192.168.0.55:8686';
