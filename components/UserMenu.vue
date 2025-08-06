@@ -370,3 +370,70 @@ onMounted(async () => {
   }
 });
 </script> 
+
+<style scoped>
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .w-64 {
+    width: 280px;
+  }
+  
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .py-2 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .w-9 {
+    width: 2.25rem;
+  }
+  
+  .h-9 {
+    height: 2.25rem;
+  }
+  
+  .w-10 {
+    width: 2.5rem;
+  }
+  
+  .h-10 {
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .w-64 {
+    width: 260px;
+  }
+  
+  .px-4 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .w-9 {
+    width: 2rem;
+  }
+  
+  .h-9 {
+    height: 2rem;
+  }
+  
+  .w-10 {
+    width: 2.25rem;
+  }
+  
+  .h-10 {
+    height: 2.25rem;
+  }
+}
+</style> 

@@ -95,12 +95,60 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  
   h2 {
     font-size: 1.8rem;
   }
   
   .subtitle {
     font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .card h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .container {
+    padding: 1rem 0.75rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  .subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .card {
+    padding: 1.25rem;
+  }
+  
+  .card h3 {
+    font-size: 1.1rem;
   }
 }
 </style> 
