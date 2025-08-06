@@ -3,7 +3,7 @@
     <div class="container ">
       <h1>GPT-OSS: A New Era of Open AI</h1>
     <p>
-      Expertise You Can Download. Released on August 5, 2025, GPT-OSS marks OpenAI's return to open-weight models. 
+      Released on August 5, 2025, GPT-OSS marks OpenAI's return to open-weight models. 
       It includes <strong>gpt-oss-120B</strong> and <strong>gpt-oss-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
       This isn't just a model; it's a new foundation for trustworthy AI.
     </p>
