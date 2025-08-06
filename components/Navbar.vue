@@ -8,7 +8,7 @@
           <!-- Logo -->
           <div class="flex-shrink-0">
             <NuxtLink to="/">
-              <span class="text-blue-logo text-2xl lg:text-3xl font-bold">Wan2Video</span>
+              <span class="text-blue-logo text-2xl lg:text-3xl font-bold">GPTOSS2</span>
             </NuxtLink>
           </div>
 

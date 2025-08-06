@@ -101,7 +101,7 @@
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">11. Contact Information</h2>
-          <p>For any questions regarding these Terms of Service, please contact us at: <strong class="text-blue-button">support@wan2video.com</strong></p>
+          <p>For any questions regarding these Terms of Service, please contact us at: <strong class="text-blue-button">support@www.gptoss2.com</strong></p>
         </section>
 
         <section class="mt-8">

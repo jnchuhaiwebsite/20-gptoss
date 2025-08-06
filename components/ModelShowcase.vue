@@ -82,48 +82,48 @@ const notificationStore = useNotificationStore();
 
 const cases = [
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Moonlit-Ink-Wash-Kitten.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Moonlit-Ink-Wash-Kitten.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Moonlit-Ink-Wash-Kitten.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Moonlit-Ink-Wash-Kitten.webp",
     desc: "A Chinese ink-style animation featuring a fluffy white kitten running through a moonlit courtyard. The kitten has round eyes, gently twitching ears, agile limbs, and a tail that sways naturally with its movement. The background is a traditional Chinese courtyard with stone paths flanked by low bamboo fences and blooming plum blossoms. In the distance, a hazy moon hangs in the night sky. The color palette is a soft blue-gray tone, creating a serene nighttime atmosphere. The camera follows the kitten from a low-angle perspective, emphasizing dynamic motion."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Whimsical-City-Dash.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Whimsical-City-Dash.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Whimsical-City-Dash.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Whimsical-City-Dash.webp",
     desc: "The camera rapidly advances along the city's central road, revealing the details of the streets on both sides of the city and the passers-by. The atmosphere of the scene is full of childlike fun and fantasy."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/The-Lamplight-Listener.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/The-Lamplight-Listener.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/The-Lamplight-Listener.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/The-Lamplight-Listener.webp",
     desc: "Edge lighting, medium-close shot, artificial lighting, side lighting, low saturation, warm tones, composition weighted to the right. The scene is filmed from an over-the-shoulder angle, focusing on a foreign girl wearing a blue-and-white plaid shirt. She has well-defined facial features and bright, focused eyes. A few strands of hair fall from her neat ponytail, adding a soft touch to her appearance. The girl slightly tilts her head, lips slightly parted, as if she's listening to someone speaking across from her. The background is a dimly lit, blurred room. A vintage desk lamp with a white lampshade provides a soft side light, illuminating the contours of her face. A black wooden door next to a cabinet is faintly visible, enhancing the scene's sense of mystery and depth."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Desk-Repose.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Desk-Repose.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Desk-Repose.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Desk-Repose.webp",
     desc: "Hard lighting, side lighting, medium shot, low saturation, high contrast, mid focal length. A close-up of a foreign man is captured straight-on. He is wearing a striped shirt and sitting at a wooden desk with some folders and a red telephone on it. His arms are crossed over his chest, and his head rests against the wall as he relaxes. His eyes are closed, and his mouth is slightly open as if speaking. In the foreground, a blurred silhouette of a person is visible. The background features a dark wooden wall with a painting and other decorations hanging on it. The overall scene conveys a quiet, contemplative mood."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Morning-Gaze.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Morning-Gaze.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Morning-Gaze.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Morning-Gaze.webp",
     desc: "Sunrise, daytime, soft light, side lighting, edge lighting, medium-close shot, centered composition, warm tones. A Caucasian woman sits on a white bed, wearing a blue-and-white checkered cotton shirt. Her hair is messy and voluminous, naturally wavy in golden brown. She looks slightly tired but gazes softly toward the camera, as if in conversation. Sunlight streams through light beige curtains, casting gentle light and shadow contours on the bed sheets and walls. A white wrought iron railing surrounds the window, enhancing the room's peaceful and cozy atmosphere. The camera focuses on the woman's upper body, with a blurred background that highlights the subtle interaction between her emotions and the environment."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/My-Little-Max.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/My-Little-Max.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/My-Little-Max.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/My-Little-Max.webp",
     desc: "A straight-on close-up of a foreign man's face. He has blue eyes and a shaved head. His face is covered in sweat as he stares directly into the camera, then slowly lowers his head. At the bottom of the screen, white English subtitles appear: \"My little Max...\". The background is blurred and indistinct. The camera tilts upward, transitioning to an overhead close-up of the back of his head."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Jungle-Prowl.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Jungle-Prowl.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Jungle-Prowl.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Jungle-Prowl.webp",
     desc: "A telephoto shot captures a tiger moving through the jungle. The camera follows the tiger with smooth motion as it remains centered in the frame. Its muscles shift subtly beneath its striped fur. The tiger's eyes are focused straight ahead, and its steps are steady and powerful. The background is filled with dense green foliage and trees, with sunlight filtering through the leaves to create dappled patterns of light and shadow."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/Desert-Drive.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/Desert-Drive.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/Desert-Drive.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/Desert-Drive.webp",
     desc: "Warm tones, extreme wide shot, aerial view, daylight, hard lighting, establishing shot. In a barren desert, a black SUV speeds along a highway. Filmed from above, the vehicle drives on the left side of the road, with a roof rack and a red taillight visible on top. The camera slowly pushes forward, revealing vast yellow sand dunes ahead, with several mountains visible in the distance. The sky is pale blue, and sunlight filters through the clouds, casting a warm glow over the desolate landscape. On both sides of the road are dry grasslands dotted with low shrubs."
   },
   {
-    video: "https://resp.wan2video.com/wan2ai/gallery/video/The-Aftermath.mp4",
-    poster: "https://resp.wan2video.com/wan2ai/gallery/image/The-Aftermath.webp",
+    video: "https://resp.www.gptoss2.com/wan2ai/gallery/video/The-Aftermath.mp4",
+    poster: "https://resp.www.gptoss2.com/wan2ai/gallery/image/The-Aftermath.webp",
     desc: "Practical lighting, high saturation, balanced composition, nighttime, top lighting, soft light, warm tones, mid focal length, low contrast, medium shot, artificial lighting, three-person frame. In a dimly lit interior, the camera captures a straight-on medium shot of three foreign individuals. On the left, a woman in a black dress with gold embellishments holds a handgun. In the center, a man in a black tuxedo has blood on his face. On the right, a woman in a red dress with a large flower on her chest also has blood on her face. All three are looking in the same direction. In the background, a table lamp and some furniture are visible, but the details are unclear."
   }
 ];

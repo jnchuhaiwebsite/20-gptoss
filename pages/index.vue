@@ -1,27 +1,32 @@
 <template>
-  <div class="min-h-screen bg-blue-pale">
+  <div class="min-h-screen bg-gray-50">
     <main>
       <!-- 主功能区 -->
-      <HeroSection />
+      <!-- <GptOssHero /> -->
       
-      <!-- 操作步骤 -->
-      <ProcessSteps />
+      <!-- GPT-OSS 介绍 -->
+      <GptOssIntro />
+      
+      <!-- 适用人群 -->
+      <GptOssForWhom />
       
       <!-- 核心优势 -->
-      <CoreFeatures />
-
-            
-      <!-- 适用人群 -->
-      <ForWhomSection />
+      <GptOssAdvantages />
       
-      <!-- 模型案例展示 -->
-      <ModelShowcase />
+      <!-- 模型对比 -->
+      <ModelComparisonTable />
+      
+      <!-- 提示解决方案 -->
+      <PromptSolutions />
       
       <!-- 套餐价格 -->
-      <PricingPlans />
+      <GptOssPricing />
 
       <!-- 常见问题 -->
-      <FaqPreview />
+      <GptOssFaq />
+      
+      <!-- 最终行动号召 -->
+      <!-- <GptOssFinalCta /> -->
 
     </main>
   </div>
@@ -35,20 +40,23 @@ import { useNavigation } from '~/utils/navigation'
 
 // 导入组件
 import Navbar from '~/components/Navbar.vue'
-import HeroSection from '~/components/HeroSection.vue'
-import ProcessSteps from '~/components/ProcessSteps.vue'
-import CoreFeatures from '~/components/CoreFeatures.vue'
-import ModelShowcase from '~/components/ModelShowcase.vue'
-import PricingPlans from '~/components/PricingPlans.vue'
-import ForWhomSection from '~/components/ForWhomSection.vue'
+import GptOssHero from '~/components/GptOssHero.vue'
+import GptOssIntro from '~/components/GptOssIntro.vue'
+import GptOssForWhom from '~/components/GptOssForWhom.vue'
+import GptOssAdvantages from '~/components/GptOssAdvantages.vue'
+import ModelComparisonTable from '~/components/ModelComparisonTable.vue'
+import PromptSolutions from '~/components/PromptSolutions.vue'
+import GptOssPricing from '~/components/GptOssPricing.vue'
+import GptOssFaq from '~/components/GptOssFaq.vue'
+import GptOssFinalCta from '~/components/GptOssFinalCta.vue'
 
 const { $toast } = useNuxtApp() as any
 const { handleScroll } = useNavigation()
 
 // 使用默认的 SEO 配置
 useSeo({
-  title: 'Wan 2.2 Plus - Cinematic AI Video Generator',
-  description: 'Generate AI videos with Wan 2.2 Plus. Cinematic visuals, realistic motion, prompt control—ideal for creators and marketers.'
+  title: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI',
+  description: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system. Start for free today!'
 })
 
 // 处理支付回调

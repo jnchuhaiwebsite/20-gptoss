@@ -41,42 +41,15 @@
               </div>
             </div>
 
-            <div class="space-y-1 mt-2">
-              <div v-if="vipLastTime" class="flex justify-between">
-                <p class="text-xs text-gray-600">VIP expiration time:</p>
-                <p class="text-xs text-gray-400">
-                  {{ vipLastTime }}
-                </p>
-              </div>
-            </div>
+           
           </div>
 
           <!-- 菜单选项 -->
           <div class="py-1 border-b border-baby-pink/20">
-            <!-- 个人中心 -->
-            <NuxtLink
-              to="/profile"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-baby-pink/10 flex items-center transition-all duration-200 hover:translate-x-1"
-              @click="showUserMenu = false"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Personal Center
-            </NuxtLink>
+
 
             <!-- 我的积分 -->
-            <div
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-baby-pink/10 flex items-center justify-between transition-all duration-200 hover:translate-x-1 cursor-pointer"
-            >
-              <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.171-.879-1.171-2.303 0-3.182C10.536 7.719 11.768 7.5 12 7.5c.725 0 1.45.22 2.003.659" />
-                </svg>
-                Credits:
-              </div>
-              <span class="text-gray-500">{{ points }}</span>
-            </div>
+
           </div>
 
           <!-- 退出按钮 -->
@@ -140,45 +113,10 @@
             {{ userDisplay?.email }}
           </p>
           
-          <!-- VIP时间显示优化 -->
-          <div v-if="vipLastTime" class="mt-1">
-            <p class="text-xs text-gray-600">VIP过期时间:</p>
-            <p class="text-xs text-gray-500 font-mono">
-              {{ vipLastTime }}
-            </p>
-          </div>
+         
         </div>
       </div>
 
-      <!-- 移动端菜单选项 -->
-      <div class="space-y-3">
-        <!-- 个人中心 -->
-        <NuxtLink
-          to="/profile"
-          @click="props.onCloseMobileNav?.()"
-          class="block w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-50 to-baby-pink/20 hover:from-blue-100 hover:to-baby-pink/30 active:scale-[0.98] transition-all duration-200 text-sm font-medium text-gray-700 flex items-center gap-3 shadow-sm border border-blue-100/50"
-        >
-          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-blue-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          <span class="text-gray-800">Personal Center</span>
-        </NuxtLink>
-
-        <!-- 我的积分 -->
-        <div class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-100/50 text-sm font-medium text-gray-700 flex items-center justify-between shadow-sm">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-yellow-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.171-.879-1.171-2.303 0-3.182C10.536 7.719 11.768 7.5 12 7.5c.725 0 1.45.22 2.003.659" />
-              </svg>
-            </div>
-            <span class="text-gray-800">Credits:</span>
-          </div>
-          <span class="text-orange-600 font-semibold bg-orange-100 px-2 py-1 rounded-lg text-xs">{{ points }}</span>
-        </div>
-      </div>
 
       <!-- 退出按钮 -->
       <SignOutButton>

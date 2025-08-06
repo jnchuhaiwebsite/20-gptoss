@@ -21,7 +21,7 @@ Disallow: /components/
 Disallow: /profile
 
 # 声明网站地图
-Sitemap: https://www.wan2video.com/sitemap.xml
+Sitemap: https://www.www.gptoss2.com/sitemap.xml
 
 
 

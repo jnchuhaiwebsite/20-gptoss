@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      title: 'wan2.2 video generator',
+      title: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI',
       htmlAttrs: {
         lang: 'en' // 设置 HTML 语言
       },
@@ -34,29 +34,32 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
-          content: 'The Premier wan2.2 Video Generator - Transform static images into breathtaking video clips with unparalleled ease and cinematic motion.'
+          content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system. Start for free today!'
         },
         // Open Graph / Facebook
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'The wan2.2 Video Generator - Transform Images to Videos' },
-        { property: 'og:description', content: 'From static art to cinematic motion. Experience the premier wan2.2 video generator, built to transform your images into breathtaking video clips.' },
+        { property: 'og:title', content: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI' },
+        { property: 'og:description', content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
         { property: 'og:image', content: '/favicon.ico' },
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'The wan2.2 Video Generator - Image to Video AI' },
-        { name: 'twitter:description', content: 'Transform your static images into stunning video clips with our premier wan2.2 video generator. From art to cinematic motion in seconds.' },
+        { name: 'twitter:title', content: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI' },
+        { name: 'twitter:description', content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
         { name: 'twitter:image', content: '/favicon.ico' },
         // Keywords
-        { name: 'keywords', content: 'wan2.2 video generator, image to video, AI video creation, static to motion, cinematic video, AI animation' },
-        { name: 'author', content: 'wan2.2 Video Generator Team' },
-        { name: 'application-name', content: 'wan2.2 Video Generator' },
+        { name: 'keywords', content: 'GPT-OSS, OpenAI, open-weight AI, private AI, on-premise AI, chain-of-thought, AI reasoning' },
+        { name: 'author', content: 'GPT-OSS Team' },
+        { name: 'application-name', content: 'GPT-OSS' },
       ],
       script: [
         { src: '/js/c6h.js', async: true } 
       ], // 外部脚本
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'canonical', href: 'https://www.wan2video.com' }
+        { rel: 'canonical', href: 'https://gptoss.com' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' }
       ]
     }
   },

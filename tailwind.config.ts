@@ -55,9 +55,9 @@ export default {
 			footerborder: '#DDDDDD',     // [分割线-浅灰] 一条清晰但不突兀的灰色分割线。
   
 			// --- 其他元素 ---
-			logo: '#665ffa',            // [Logo] 品牌色。
+			logo: '#284bfb',            // [Logo] 品牌色。
 			parameters: '#4004ba',      // [次要交互点] 使用深紫色。
-			backtotop: '#665ffa',       // [返回顶部] 使用主品牌色。
+			backtotop: '#284bfb',       // [返回顶部] 使用主品牌色。
   
 			// --- 定价卡片 (采用浅色背景层次) ---
 			pricing: '#FFFFFF',         // [卡片背景] 使用白色背景，保持简洁和明亮。
