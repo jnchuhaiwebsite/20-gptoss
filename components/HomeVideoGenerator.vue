@@ -177,10 +177,10 @@ const uploadImage = async (file: File) => {
 const testResults = () => {
   console.log('🧪 Test display results');
   const testUrls = [
-    'https://resp.wan2video.com/wan2.2/202507/31/86f48305-d820-4e7f-91e2-c5f32017bdef.mp4',
-    'https://resp.wan2video.com/wan2.2/202507/31/e12fd1e4-948d-4671-bfbd-42c2427ae8ec.mp4',
-    'https://resp.wan2video.com/wan2.2/202507/31/c487dfcd-7fc3-4489-b525-d66ad09f8ef7.mp4',
-    'https://resp.wan2video.com/wan2.2/202507/31/c483754a-cfdd-4694-83ed-49096682765d.mp4'
+    'https://resp.www.gptoss2.com/wan2.2/202507/31/86f48305-d820-4e7f-91e2-c5f32017bdef.mp4',
+    'https://resp.www.gptoss2.com/wan2.2/202507/31/e12fd1e4-948d-4671-bfbd-42c2427ae8ec.mp4',
+    'https://resp.www.gptoss2.com/wan2.2/202507/31/c487dfcd-7fc3-4489-b525-d66ad09f8ef7.mp4',
+    'https://resp.www.gptoss2.com/wan2.2/202507/31/c483754a-cfdd-4694-83ed-49096682765d.mp4'
   ];
   videoTaskStore.displayResults(testUrls, 'test-task-id');
 }

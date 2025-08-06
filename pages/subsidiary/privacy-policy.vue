@@ -72,7 +72,7 @@
             <li>Request the deletion of your personal information and account.</li>
             <li>Export your data in a machine-readable format.</li>
           </ul>
-          <p class="mt-4">To exercise these rights, please contact our support team at <strong class="text-blue-button">support@wan2video.com</strong>.</p>
+          <p class="mt-4">To exercise these rights, please contact our support team at <strong class="text-blue-button">support@www.gptoss2.com</strong>.</p>
         </section>
 
         <section>
@@ -92,7 +92,7 @@
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">10. Contact Us</h2>
-          <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please do not hesitate to contact us at: <strong class="text-blue-button">support@wan2video.com</strong></p>
+          <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please do not hesitate to contact us at: <strong class="text-blue-button">support@www.gptoss2.com</strong></p>
         </section>
 
         <section class="mt-8">

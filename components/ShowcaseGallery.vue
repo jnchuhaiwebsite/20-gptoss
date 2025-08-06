@@ -16,8 +16,8 @@
             loop 
             muted 
             playsinline 
-            src="https://resp.wan2video.com/wan2.2/videogenerator/1.mp4" 
-            poster="https://resp.wan2video.com/wan2.2/videogenerator/1.webp"
+            src="https://resp.www.gptoss2.com/wan2.2/videogenerator/1.mp4" 
+            poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/1.webp"
             loading="lazy"
             preload="metadata"
             @click="togglePlay($event)"
@@ -34,8 +34,8 @@
             loop 
             muted 
             playsinline 
-            src="https://resp.wan2video.com/wan2.2/videogenerator/2.mp4" 
-            poster="https://resp.wan2video.com/wan2.2/videogenerator/2.webp"
+            src="https://resp.www.gptoss2.com/wan2.2/videogenerator/2.mp4" 
+            poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/2.webp"
             loading="lazy"
             preload="metadata"
             @click="togglePlay($event)"
@@ -52,8 +52,8 @@
             loop 
             muted 
             playsinline 
-            src="https://resp.wan2video.com/wan2.2/videogenerator/3.mp4" 
-            poster="https://resp.wan2video.com/wan2.2/videogenerator/3.webp"
+            src="https://resp.www.gptoss2.com/wan2.2/videogenerator/3.mp4" 
+            poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/3.webp"
             loading="lazy"
             preload="metadata"
             @click="togglePlay($event)"
@@ -70,8 +70,8 @@
             loop 
             muted 
             playsinline 
-            src="https://resp.wan2video.com/wan2.2/videogenerator/4.mp4" 
-            poster="https://resp.wan2video.com/wan2.2/videogenerator/4.webp"
+            src="https://resp.www.gptoss2.com/wan2.2/videogenerator/4.mp4" 
+            poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/4.webp"
             loading="lazy"
             preload="metadata"
             @click="togglePlay($event)"
@@ -87,8 +87,8 @@
              loop 
              muted 
              playsinline 
-             src="https://resp.wan2video.com/wan2.2/videogenerator/7.mp4" 
-             poster="https://resp.wan2video.com/wan2.2/videogenerator/7.webp"
+             src="https://resp.www.gptoss2.com/wan2.2/videogenerator/7.mp4" 
+             poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/7.webp"
              loading="lazy"
              preload="metadata"
              @click="togglePlay($event)"
@@ -105,8 +105,8 @@
              loop 
              muted 
              playsinline 
-             src="https://resp.wan2video.com/wan2.2/videogenerator/8.mp4" 
-             poster="https://resp.wan2video.com/wan2.2/videogenerator/8.webp"
+             src="https://resp.www.gptoss2.com/wan2.2/videogenerator/8.mp4" 
+             poster="https://resp.www.gptoss2.com/wan2.2/videogenerator/8.webp"
              loading="lazy"
              preload="metadata"
              @click="togglePlay($event)"
