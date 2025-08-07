@@ -4,7 +4,7 @@
       <!-- 页面标题区域 -->
       <header>
         <PageHero 
-          title="GPTOSS2 FAQ - Help Center"
+          title="gtp-oss FAQ - Help Center"
           subtitle="Get answers to common questions about our AI-powered platform and features."
         />
       </header>
@@ -442,8 +442,9 @@ defineOptions({
 
 // SEO data
 useSeo({
-  title: 'GPTOSS2 FAQ - Help & Support Center',
-  description: 'Get answers to common questions about GPTOSS2, the ultimate AI-powered platform for creating stunning content. Learn about features, pricing, and more.',
+  title: 'Find answers to common questions about gpt-oss.',
+  description: 'Find answers to common questions about gpt-oss. Get help with using gpt-oss, troubleshooting issues, and more.',
+
 })
 
 // Track expanded state of each FAQ item - all collapsed by default
