@@ -26,10 +26,10 @@
           <div class="flex flex-col items-center text-center">
             <p class="text-blue-logo text-2xl md:text-3xl font-bold mb-4">GPTOSS2</p>
             <p class="text-sm text-blue-footertext mb-4">
-              Experience GPT-OSS, OpenAI's powerful open-weight AI, through our intuitive web application. Get elite performance and chain-of-thought reasoning, with every request processed in a secure, private environment to guarantee your data's confidentiality.
+              Experience gpt-oss, OpenAI's powerful open-weight AI, through our intuitive web application. Get elite performance and chain-of-thought reasoning, with every request processed in a secure, private environment to guarantee your data's confidentiality.
             </p>
             <div class="flex flex-col items-center gap-2 text-sm text-gray-500">
-              <p>© 2025 GPT-OSS All rights reserved.</p>
+              <p>© 2025 gpt-oss All rights reserved.</p>
               <div class="text-center">
                 <p class="text-blue-footertext text-sm">
                   <a href="mailto:support@www.gptoss2.com" class="text-blue-h1 hover:text-blue-footerhover transition-colors">support@www.gptoss2.com</a>

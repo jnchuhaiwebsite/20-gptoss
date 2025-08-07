@@ -1,10 +1,10 @@
 <template>
   <header id="intro" class="hero mt-[80px]">
     <div class="container ">
-      <h1>GPT-OSS: A New Era of Open AI</h1>
+      <h1>gpt-oss: A New Era of Open AI</h1>
     <p>
-      Released on August 5, 2025, GPT-OSS marks OpenAI's return to open-weight models. 
-      It includes <strong>GPT-OSS-120B</strong> and <strong>GPT-OSS-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
+      Released on August 5, 2025, gpt-oss marks OpenAI's return to open-weight models. 
+      It includes <strong>gpt-oss-120B</strong> and <strong>gpt-oss-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
       This isn't just a model; it's a new foundation for trustworthy AI.
     </p>
       <!-- <a href="#pricing" class="cta-button">Get Started for Free</a> -->
@@ -18,10 +18,11 @@
 
 <style scoped>
 .hero {
-  background-color: #1a1a2e;
-  color: #ffffff;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
   text-align: center;
   padding: 5rem 1.5rem;
+  overflow: hidden;
 }
 
 .container {
@@ -49,7 +50,7 @@ p {
 
 .cta-button {
   display: inline-block;
-  background-color: #284bfb;
+  background-color: var(--color-primary);
   color: #ffffff;
   padding: 0.8rem 2.2rem;
   border-radius: 50px;
@@ -60,9 +61,9 @@ p {
 }
 
 .cta-button:hover {
-  background-color: #4a47a3;
+  background-color: var(--color-primary-hover);
   transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(97, 94, 255, 0.4);
+  box-shadow: 0 4px 15px var(--color-shadow-primary);
 }
 
 /* 移动端优化 */
@@ -102,4 +103,4 @@ p {
     font-size: 0.95rem;
   }
 }
-</style> 
+</style>

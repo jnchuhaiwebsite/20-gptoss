@@ -31,6 +31,13 @@ const notificationStore = useNotificationStore()
   /* 背景和边框 */
   --bg-primary: #F5F7FA;
   --bg-secondary: #e6e2de;
+  
+  /* 组件使用的颜色变量 */
+  --color-bg-dark: #1a1a2e;
+  --color-text-light: #ffffff;
+  --color-primary: #284bfb;
+  --color-primary-hover: #4a47a3;
+  --color-shadow-primary: rgba(97, 94, 255, 0.4);
 }
 
 /* 主题色相关的通用类 */

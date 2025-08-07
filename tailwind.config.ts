@@ -18,13 +18,90 @@ export default {
         },
       colors: {
         theme: '#ffffff',
+        // 主色调
+        primary: '#284bfb',
+        'primary-hover': '#4a47a3',
+        'primary-light': '#615eff',
+        
+        // 背景色
+        'bg-primary': '#ffffff',
+        'bg-secondary': '#f9f9f9',
+        'bg-dark': '#1a1a2e',
+        'bg-gray': '#f5f5f5',
+        'bg-gray50': '#f9fafb',
+        
+        // 文字颜色
+        'text-primary': '#1a1a2e',
+        'text-secondary': '#555555',
+        'text-tertiary': '#333333',
+        'text-light': '#ffffff',
+        'text-muted': '#6b7280',
+        
+        // 边框颜色
+        'border-light': '#e0e0e0',
+        'border-medium': '#d1d5db',
+        'border-dark': '#9ca3af',
+        
+        // 阴影颜色
+        'shadow-light': 'rgba(0,0,0,0.07)',
+        'shadow-medium': 'rgba(0,0,0,0.1)',
+        'shadow-dark': 'rgba(0,0,0,0.15)',
+        'shadow-primary': 'rgba(97, 94, 255, 0.4)',
+        
+        // 状态颜色
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
+        info: '#3b82f6',
+        
+        // 表格颜色
+        'table-header': '#000000',
+        'table-header-text': '#ffffff',
+        'table-row-hover': '#f8f9fa',
+        'table-border': '#e0e0e0',
+        
+        // 卡片颜色
+        'card-bg': '#ffffff',
+        'card-border': '#e5e7eb',
+        'card-shadow': 'rgba(0,0,0,0.07)',
+        'card-shadow-hover': 'rgba(0,0,0,0.1)',
+        
+        // 按钮颜色
+        'button-primary': '#284bfb',
+        'button-primary-hover': '#4a47a3',
+        'button-secondary': '#6b7280',
+        'button-secondary-hover': '#4b5563',
+        
+        // FAQ 组件颜色
+        'faq-border-left': '#284bfb',
+        'faq-bg': '#ffffff',
+        
+        // 扩展颜色 - 导航和文本
+        'blue-medium': '#615eff',
+        'blue-light': '#e6e8ff',
+        'blue-navtext': '#1a1a2e',
+        'blue-footertext': '#6b7280',
+        'baby-pink': '#ffccd5',
+        
+        // 扩展颜色 - 红色系列
+        'red-50': '#fef2f2',
+        'red-100': '#fee2e2',
+        'red-600': '#dc2626',
+        'red-700': '#b91c1c',
+        
+        // 扩展颜色 - 粉色系列
+        'pink-50': '#fdf2f8',
+        'pink-100': '#fce7f3',
+        
         blue: {
 			dark: '#665ffa',          // [主品牌色] 用于所有关键交互元素，形成强烈的视觉焦点。
 			medium: '#7D72FF',         // [悬停亮紫色] 提供明亮、清晰的悬停反馈。
-  
-			// --- 全新“浅色背景”体系 ---
-			pale: '#F7F7F7',          // [浅色主背景] 使用浅灰色背景，减轻眼睛疲劳，同时保持清新、现代感。
+			primary: '#284bfb',        // [主色调] 品牌核心蓝色
+			'primary-hover': '#4a47a3', // [主色调悬停] 按钮等元素悬停状态
+			navtext: '#165DFF',        // [导航文本] 导航栏链接文本
+			footertext: '#6B7280',     // [页脚文本] 页脚区域文本
 			light: '#E5E5E5',          // [高亮背景-浅灰] 用于热门套餐等区域的背景，比卡片背景稍亮，以示区别。
+			pale: '#F7F7F7',          // [浅色主背景] 使用浅灰色背景，减轻眼睛疲劳，同时保持清新、现代感。
   
 			// --- 标题与渐变 (浅色背景下的优化效果) ---
 			h1: '#284bfb',              // [H1备用色] 渐变降级方案。
@@ -39,7 +116,6 @@ export default {
   
 			// --- 导航栏与表面元素 ---
 			nav: '#FFFFFF',             // [表面-白色] 用于导航栏、卡片等“浮动”元素的背景，与浅色背景形成鲜明对比。
-			navtext: '#333333',         // 使用深灰色导航文本，确保清晰可读。
   
 			// --- 组件 ---
 			badge: '#284bfb',            // [徽章] 品牌紫。
@@ -49,7 +125,6 @@ export default {
   
 			// --- 页脚 ---
 			footer: '#665ffa',          // [页脚链接] 页脚中的重要链接。
-			footertext: '#333333',      // 使用深灰色的页脚文本。
 			footerhover: '#284bfb',      // 页脚链接悬停时变为更亮的紫色。
 			footerbg: '#FFFFFF',        // 与页面主背景色统一，保持整体性。
 			footerborder: '#DDDDDD',     // [分割线-浅灰] 一条清晰但不突兀的灰色分割线。
@@ -85,6 +160,7 @@ export default {
 			aspectoption: '#665ffa', // [比例选择选项] 使用次要文本颜色作为选项文字。
 			aspectoptionselected: '#665ffa' // [比例选择已选选项] 使用主文本颜色作为已选中的选项文字。
         },
+        // 原有配置中的背景和前景色
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -95,13 +171,7 @@ export default {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))'
         },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-          hover: 'hsl(var(--primary-hover))',
-          light: 'hsl(var(--primary-light))',
-          dark: 'hsl(var(--primary-dark))'
-        },
+
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
@@ -122,21 +192,7 @@ export default {
           foreground: 'hsl(var(--destructive-foreground))',
           hover: 'hsl(var(--destructive-hover))'
         },
-        success: {
-          DEFAULT: 'hsl(var(--success))',
-          foreground: 'hsl(var(--success-foreground))',
-          hover: 'hsl(var(--success-hover))'
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          foreground: 'hsl(var(--warning-foreground))',
-          hover: 'hsl(var(--warning-hover))'
-        },
-        info: {
-          DEFAULT: 'hsl(var(--info))',
-          foreground: 'hsl(var(--info-foreground))',
-          hover: 'hsl(var(--info-hover))'
-        },
+    
         border: 'hsl(var(--border))',
         input: {
           DEFAULT: 'hsl(var(--input))',

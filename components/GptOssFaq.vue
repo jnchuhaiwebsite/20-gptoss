@@ -1,8 +1,8 @@
 <template>
   <section id="faq" class="section container">
-    <h2>Frequently Asked Questions</h2>
+    <h2>FAQ - gpt-oss</h2>
     <p class="subtitle">
-      Your Questions, Answered. Building Trust Through Transparency.
+ Find answers to common questions about gpt-oss.
     </p>
     <div class="faq-item">
       <strong>How do you ensure the quality and safety of AI outputs?</strong>

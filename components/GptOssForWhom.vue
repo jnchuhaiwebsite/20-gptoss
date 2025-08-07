@@ -2,7 +2,7 @@
   <section id="for-whom" class="section container">
     <h2>Built for Innovators, Built for You</h2>
     <p class="subtitle">
-      Empowering Your Vision, Securely. GPT-OSS provides a versatile and secure AI toolkit for professionals across industries.
+      Empowering Your Vision, Securely. gpt-oss provides a versatile and secure AI toolkit for professionals across industries.
     </p>
     <div class="grid">
       <div class="card">

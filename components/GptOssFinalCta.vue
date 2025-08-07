@@ -1,7 +1,7 @@
 <template>
   <section class="section final-cta">
     <div class="container">
-      <h2>Ready to Build with GPT-OSS?</h2>
+      <h2>Ready to Build with gpt-oss?</h2>
       <p class="cta-description">
         Join the new wave of AI development with a model that prioritizes your privacy and empowers your creativity. Get started in seconds.
       </p>
