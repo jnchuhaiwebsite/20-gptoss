@@ -20,21 +20,125 @@
       <!-- <div class="w-full h-px bg-blue-footerborder/30 mb-8" v-if="partnerSites && partnerSites.length > 0"></div> -->
 
       <!-- 主要内容区域 -->
-      <div class="flex flex-col items-center justify-center text-center mobile-footer-links">
-        <!-- Logo 和描述 -->
+      <div class="flex flex-col md:flex-row gap-8 md:gap-16 mobile-footer-links">
+        <!-- LOGO 和描述-->
+
         <div class="max-w-2xl">
-          <div class="flex flex-col items-center text-center">
+          <div class="flex flex-col text-left">
             <p class="text-blue-logo text-2xl md:text-3xl font-bold mb-4">GPTOSS2</p>
             <p class="text-sm text-blue-footertext mb-4">
               Experience gpt-oss, OpenAI's powerful open-weight AI, through our intuitive web application. Get elite performance and chain-of-thought reasoning, with every request processed in a secure, private environment to guarantee your data's confidentiality.
             </p>
-            <div class="flex flex-col items-center gap-2 text-sm text-gray-500">
+            <div class="flex flex-col gap-2 text-sm text-gray-500">
               <p>© 2025 gpt-oss All rights reserved.</p>
-              <div class="text-center">
+              <div>
                 <p class="text-blue-footertext text-sm">
                   <a href="mailto:support@www.gptoss2.com" class="text-blue-h1 hover:text-blue-footerhover transition-colors">support@www.gptoss2.com</a>
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 导航链接和法律条款 -->
+        <div class="flex-1 flex flex-col sm:flex-row gap-6 md:gap-8">
+          <!-- 导航链接 -->
+         <div class="flex-1 text-center sm:text-left">
+            <div class="text-blue-logo font-medium mb-4 text-sm md:text-lg">Resources</div>
+            <div class="flex flex-col gap-2 items-center sm:items-start">
+              <template v-for="(section, index) in footerSections" :key="index">
+                <div v-if="section.href && section.openInNewTab" 
+                  @click="handleLinkClick(section.href, section.openInNewTab)"
+                  class="text-blue-footertext hover:text-blue-logo transition-colors cursor-pointer flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </div>
+                <NuxtLink v-else-if="section.href" :to="section.href" 
+                  class="text-blue-footertext hover:text-blue-logo transition-colors flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </NuxtLink>
+                <div v-else @click.prevent="handleNavClick(section.id)" 
+                  class="text-blue-footertext hover:text-blue-logo transition-colors cursor-pointer flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+          <!-- Products 部分 - 只在有内容时显示 -->
+          <div v-if="productsSections && productsSections.length > 0" class="flex-1 text-center sm:text-left">
+            <div class="text-blue-logo font-medium mb-4 text-sm md:text-lg">Products</div>
+            <div class="flex flex-col gap-2 items-center sm:items-start">
+              <template v-for="(section, index) in productsSections" :key="index">
+                <div v-if="section.href && section.openInNewTab" 
+                  @click="handleLinkClick(section.href, section.openInNewTab)"
+                  class="text-blue-footertext hover:text-blue-logo transition-colors cursor-pointer flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </div>
+                <NuxtLink v-else-if="section.href" :to="section.href" 
+                  class="text-blue-footertext hover:text-blue-logo transition-colors flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </NuxtLink>
+                <div v-else @click.prevent="handleNavClick(section.id)" 
+                  class="text-blue-footertext hover:text-blue-logo transition-colors cursor-pointer flex items-center gap-2 justify-center sm:justify-start">
+                  <span>{{ section.name }}</span>
+                  <div class="flex items-center gap-1">
+                    <span v-if="section.showBeta" class="bg-blue-logo/50 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      Beta
+                    </span>
+                    <span v-if="section.badge" class="bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
+                      {{ section.badge }}
+                    </span>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- 法律条款 -->
+          <div class="flex-1 text-center sm:text-left">
+            <div class="text-blue-logo font-medium mb-4 text-sm md:text-lg">Legal</div>
+            <div class="flex flex-col gap-2 items-center sm:items-start">
+              <NuxtLink to="/subsidiary/privacy-policy" class="text-blue-footertext hover:text-blue-logo transition-colors text-center sm:text-left">Privacy Policy</NuxtLink>
+              <NuxtLink to="/subsidiary/terms-of-service" class="text-blue-footertext hover:text-blue-logo transition-colors text-center sm:text-left">Terms of Service</NuxtLink>
             </div>
           </div>
         </div>
@@ -44,33 +148,33 @@
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue'
-// import { useNavigation } from '~/utils/navigation'
-// import { getFriendLinkList } from '~/api'
-// import { useAsyncData } from 'nuxt/app'
+import { ref } from 'vue'
+import { useNavigation } from '~/utils/navigation'
+import { getFriendLinkList } from '~/api'
+import { useAsyncData } from 'nuxt/app'
 
-// interface PartnerSite {
-//   url: string
-//   name: string
-// }
+interface PartnerSite {
+  url: string
+  name: string
+}
 
-// const { activeSection, sections, handleNavClick, handleScroll, footerSections, productsSections } = useNavigation()
+const { activeSection, sections, handleNavClick, handleScroll, footerSections, productsSections } = useNavigation()
 
-// // 处理链接点击，支持新标签页打开
-// const handleLinkClick = (href: string, openInNewTab?: boolean) => {
-//   if (openInNewTab) {
-//     window.open(href, '_blank', 'noopener,noreferrer');
-//   }
-// };
+// 处理链接点击，支持新标签页打开
+const handleLinkClick = (href: string, openInNewTab?: boolean) => {
+  if (openInNewTab) {
+    window.open(href, '_blank', 'noopener,noreferrer');
+  }
+};
 
 // 服务端请求友情链接
-// const { data: partnerSites, error } = await useAsyncData('partnerSites', async () => {
-//   const res = await getFriendLinkList()
-//   if (res.code === 200) {
-//     return res.data as PartnerSite[]
-//   }
-//   return []
-// })
+const { data: partnerSites, error } = await useAsyncData('partnerSites', async () => {
+  const res = await getFriendLinkList()
+  if (res.code === 200) {
+    return res.data as PartnerSite[]
+  }
+  return []
+})
 </script>
 
 <style scoped>
@@ -110,4 +214,4 @@ footer a:focus {
     margin-top: 0.25rem;
   }
 }
-</style> 
+</style>
