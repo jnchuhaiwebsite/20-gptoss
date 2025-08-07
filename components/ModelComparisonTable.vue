@@ -82,7 +82,7 @@ h2 {
   font-size: 2.2rem;
   text-align: center;
   margin-bottom: 1rem;
-  color: #000000;
+  @apply text-table-header;
   font-weight: 700;
   line-height: 1.3;
 }
@@ -91,7 +91,7 @@ h2 {
   text-align: center;
   max-width: 700px;
   margin: 0 auto 3rem;
-  color: #333333;
+  @apply text-text-tertiary;
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -100,7 +100,7 @@ h2 {
   overflow-x: auto;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  border: 1px solid #e0e0e0;
+  @apply border-border-light;
 }
 
 .styled-table {
@@ -111,12 +111,11 @@ h2 {
 .styled-table th, .styled-table td {
   padding: 1.2rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-table-border);
 }
 
 .styled-table th {
-  background-color: #000000;
-  color: #ffffff;
+  @apply bg-table-header text-table-header-text;
   font-weight: 700;
 }
 
@@ -126,7 +125,7 @@ h2 {
 
 .styled-table td:first-child {
   font-weight: 600;
-  color: #000000;
+  @apply text-text-primary;
 }
 
 .styled-table td {
@@ -134,9 +133,8 @@ h2 {
 }
 
 .styled-table .category-row td {
-  background-color: #f5f5f5;
+  @apply bg-table-row-hover text-black;
   font-weight: 700;
-  color: #000000;
 }
 
 @media (max-width: 768px) {
@@ -198,4 +196,4 @@ h2 {
     font-size: 0.75rem;
   }
 }
-</style> 
+</style>

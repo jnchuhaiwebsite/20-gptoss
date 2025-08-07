@@ -44,19 +44,19 @@
 }
 
 h2 {
+  @apply text-text-primary;
   font-size: 2.2rem;
   text-align: center;
   margin-bottom: 1rem;
-  color: #1a1a2e;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .subtitle {
+  @apply text-text-secondary;
   text-align: center;
   max-width: 700px;
   margin: 0 auto 3rem;
-  color: #555;
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -68,29 +68,28 @@ h2 {
 }
 
 .card {
-  background-color: #ffffff;
+  @apply bg-card-bg shadow-card;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 25px var(--color-card-shadow-hover);
 }
 
 .card h3 {
+  @apply text-primary;
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1.4rem;
-  color: #284bfb;
   font-weight: 700;
 }
 
 .card p {
+  @apply text-text-secondary;
   margin: 0;
-  color: #555;
   line-height: 1.6;
 }
 
@@ -151,4 +150,4 @@ h2 {
     font-size: 1.1rem;
   }
 }
-</style> 
+</style>

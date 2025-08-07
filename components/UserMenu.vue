@@ -5,7 +5,7 @@
       <div class="relative user-menu-container">
         <button
           @click="toggleUserMenu"
-          class="relative focus:outline-none px-1.5 py-1.5 rounded-lg hover:bg-blue-medium/10 hover:shadow-lg hover:shadow-blue-medium/20 transition-all"
+          class="relative focus:outline-none px-1.5 py-1.5 rounded-lg hover:bg-blue-medium/10 hover:shadow-lg hover:shadow-shadow-primary/20 transition-all"
         >
           <img
             :src="userDisplay?.imageUrl || '/default-avatar.png'"
@@ -29,12 +29,12 @@
                 class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-light/20"
               />
               <div>
-                <p class="text-gray-800 text-sm font-medium">
+                <p class="text-text-tertiary text-sm font-medium">
                   {{ userDisplay?.username }}
                 </p>
                 <p
                   v-if="userDisplay?.email"
-                  class="text-xs text-gray-500 truncate max-w-[160px]"
+                  class="text-xs text-text-muted truncate max-w-[160px]"
                 >
                   {{ userDisplay?.email }}
                 </p>
@@ -56,7 +56,7 @@
           <SignOutButton>
             <button
               @click="() => console.log('👆 [UserMenu] PC端退出按钮被点击')"
-              class="block w-full text-left px-4 py-2 text-sm text-blue-navtext hover:bg-blue-medium/10 flex items-center transition-all duration-200 hover:translate-x-1 hover:text-blue-dark"
+              class="block w-full text-left px-4 py-2 text-sm text-blue-navtext hover:bg-blue-medium/10 flex items-center transition-all duration-200 hover:translate-x-1 hover:text-primary-hover"
             >
               <!-- Heroicons: logout/arrow-right-on-rectangle -->
               <svg
@@ -436,4 +436,4 @@ onMounted(async () => {
     height: 2.25rem;
   }
 }
-</style> 
+</style>
