@@ -1,10 +1,10 @@
 <template>
   <header id="intro" class="hero mt-[80px]">
     <div class="container ">
-      <h1>GPT-OSS: A New Era of Open AI</h1>
+      <h1>gpt-oss: A New Era of Open AI</h1>
     <p>
-      Released on August 5, 2025, GPT-OSS marks OpenAI's return to open-weight models. 
-      It includes <strong>GPT-OSS-120B</strong> and <strong>GPT-OSS-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
+      Released on August 5, 2025, gpt-oss marks OpenAI's return to open-weight models. 
+      It includes <strong>gpt-oss-120B</strong> and <strong>gpt-oss-20B</strong>, engineered for sophisticated chain-of-thought reasoning. 
       This isn't just a model; it's a new foundation for trustworthy AI.
     </p>
       <!-- <a href="#pricing" class="cta-button">Get Started for Free</a> -->

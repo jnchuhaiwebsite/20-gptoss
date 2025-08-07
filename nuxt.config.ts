@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      title: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI',
+      title: 'gpt-oss: Private & Powerful Open-Weight AI by OpenAI',
       htmlAttrs: {
         lang: 'en' // 设置 HTML 语言
       },
@@ -34,22 +34,22 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
-          content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system. Start for free today!'
+          content: 'Experience gpt-oss: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system. Start for free today!'
         },
         // Open Graph / Facebook
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI' },
-        { property: 'og:description', content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
+        { property: 'og:title', content: 'gpt-oss: Private & Powerful Open-Weight AI by OpenAI' },
+        { property: 'og:description', content: 'Experience gpt-oss: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
         { property: 'og:image', content: '/favicon.ico' },
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI' },
-        { name: 'twitter:description', content: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
+        { name: 'twitter:title', content: 'gpt-oss: Private & Powerful Open-Weight AI by OpenAI' },
+        { name: 'twitter:description', content: 'Experience gpt-oss: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system.' },
         { name: 'twitter:image', content: '/favicon.ico' },
         // Keywords
-        { name: 'keywords', content: 'GPT-OSS, OpenAI, open-weight AI, private AI, on-premise AI, chain-of-thought, AI reasoning' },
-        { name: 'author', content: 'GPT-OSS Team' },
-        { name: 'application-name', content: 'GPT-OSS' },
+        { name: 'keywords', content: 'gpt-oss, OpenAI, open-weight AI, private AI, on-premise AI, chain-of-thought, AI reasoning' },
+        { name: 'author', content: 'gpt-oss Team' },
+        { name: 'application-name', content: 'gpt-oss' },
       ],
       script: [
         { src: '/js/c6h.js', async: true } 

@@ -116,7 +116,6 @@ export default {
   
 			// --- 导航栏与表面元素 ---
 			nav: '#FFFFFF',             // [表面-白色] 用于导航栏、卡片等“浮动”元素的背景，与浅色背景形成鲜明对比。
-			navtext: '#333333',         // 使用深灰色导航文本，确保清晰可读。
   
 			// --- 组件 ---
 			badge: '#284bfb',            // [徽章] 品牌紫。
@@ -126,7 +125,6 @@ export default {
   
 			// --- 页脚 ---
 			footer: '#665ffa',          // [页脚链接] 页脚中的重要链接。
-			footertext: '#333333',      // 使用深灰色的页脚文本。
 			footerhover: '#284bfb',      // 页脚链接悬停时变为更亮的紫色。
 			footerbg: '#FFFFFF',        // 与页面主背景色统一，保持整体性。
 			footerborder: '#DDDDDD',     // [分割线-浅灰] 一条清晰但不突兀的灰色分割线。
@@ -173,13 +171,7 @@ export default {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))'
         },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-          hover: 'hsl(var(--primary-hover))',
-          light: 'hsl(var(--primary-light))',
-          dark: 'hsl(var(--primary-dark))'
-        },
+
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
@@ -200,21 +192,7 @@ export default {
           foreground: 'hsl(var(--destructive-foreground))',
           hover: 'hsl(var(--destructive-hover))'
         },
-        success: {
-          DEFAULT: 'hsl(var(--success))',
-          foreground: 'hsl(var(--success-foreground))',
-          hover: 'hsl(var(--success-hover))'
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          foreground: 'hsl(var(--warning-foreground))',
-          hover: 'hsl(var(--warning-hover))'
-        },
-        info: {
-          DEFAULT: 'hsl(var(--info))',
-          foreground: 'hsl(var(--info-foreground))',
-          hover: 'hsl(var(--info-hover))'
-        },
+    
         border: 'hsl(var(--border))',
         input: {
           DEFAULT: 'hsl(var(--input))',

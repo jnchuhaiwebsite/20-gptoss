@@ -1,7 +1,7 @@
 <template>
   <header class="hero">
     <div class="container ">
-      <h1>GPT-OSS: Advanced AI. Total Privacy.</h1>
+      <h1>gpt-oss: Advanced AI. Total Privacy.</h1>
       <p>Your Data Stays Yours. The first open-weight model from OpenAI since 2019, built for secure, on-premise inference and complex reasoning.</p>
       <!-- <a href="#pricing" class="cta-button">Get Started for Free</a> -->
     </div>

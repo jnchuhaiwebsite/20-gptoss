@@ -4,7 +4,7 @@
       <!-- 主功能区 -->
       <!-- <GptOssHero /> -->
       
-      <!-- GPT-OSS 介绍 -->
+      <!-- gpt-oss 介绍 -->
       <GptOssIntro />
       
       <!-- 适用人群 -->
@@ -39,24 +39,20 @@ import { useNuxtApp } from 'nuxt/app'
 import { useNavigation } from '~/utils/navigation'
 
 // 导入组件
-import Navbar from '~/components/Navbar.vue'
-import GptOssHero from '~/components/GptOssHero.vue'
 import GptOssIntro from '~/components/GptOssIntro.vue'
 import GptOssForWhom from '~/components/GptOssForWhom.vue'
 import GptOssAdvantages from '~/components/GptOssAdvantages.vue'
 import ModelComparisonTable from '~/components/ModelComparisonTable.vue'
-import PromptSolutions from '~/components/PromptSolutions.vue'
 import GptOssPricing from '~/components/GptOssPricing.vue'
 import GptOssFaq from '~/components/GptOssFaq.vue'
-import GptOssFinalCta from '~/components/GptOssFinalCta.vue'
 
 const { $toast } = useNuxtApp() as any
 const { handleScroll } = useNavigation()
 
 // 使用默认的 SEO 配置
 useSeo({
-  title: 'GPT-OSS: Private & Powerful Open-Weight AI by OpenAI',
-  description: 'Experience GPT-OSS: OpenAI\'s first open-weight model since GPT-2. Get superior performance with full data privacy on your own system. Start for free today!'
+  title: 'gpt-oss | High-Performance Open-Source AI Model',
+  description: 'Discover gpt-oss,  Choose the efficient gpt-oss 20b for fast deployment or the gpt-oss 120b for peak performance. For developers & enterprise. Try now!'
 })
 
 // 处理支付回调

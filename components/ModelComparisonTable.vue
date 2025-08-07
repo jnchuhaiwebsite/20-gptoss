@@ -1,16 +1,16 @@
 <template>
   <section id="comparison" class="section container">
-    <h2>GPT-OSS vs. Other Leading Models</h2>
+    <h2>gpt-oss vs. Other Leading Models</h2>
     <p class="subtitle">
-      See how GPT-OSS stacks up against industry benchmarks. The data demonstrates its superior performance in complex tasks.
+      See how gpt-oss stacks up against industry benchmarks. The data demonstrates its superior performance in complex tasks.
     </p>
     <div class="table-wrapper">
       <table class="styled-table">
         <thead>
           <tr>
             <th>Benchmark</th>
-            <th>GPT-OSS-120b</th>
-            <th>GPT-OSS-20b</th>
+            <th>gpt-oss-120b</th>
+            <th>gpt-oss-20b</th>
             <th>OpenAI o3</th>
             <th>OpenAI o4-mini</th>
           </tr>

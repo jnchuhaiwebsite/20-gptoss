@@ -1,6 +1,6 @@
 <template>
   <section id="advantages" class="section container">
-    <h2>Core Advantages: The GPT-OSS Difference</h2>
+    <h2>Core Advantages: The gpt-oss Difference</h2>
     <p class="subtitle">
       Authority in Action: Security, Performance, and Flexibility.
     </p>
@@ -12,17 +12,17 @@
       
       <div class="card">
           <h3><span>🧠</span>Transparent & Powerful Logic</h3>
-          <p>Go beyond simple answers. GPT-OSS uses chain-of-thought to tackle complex problems, showing you its reasoning step-by-step. This makes outputs not only smarter but also fully verifiable.</p>
+          <p>Go beyond simple answers. gpt-oss uses chain-of-thought to tackle complex problems, showing you its reasoning step-by-step. This makes outputs not only smarter but also fully verifiable.</p>
       </div>
 
       <div class="card">
           <h3><span>✅</span>Auditable & Responsible by Design</h3>
-          <p>Trust is built-in. With features like <strong>reasoning path visualization</strong>, simulated abuse testing, and external expert audits, GPT-OSS provides the tools you need for safe and responsible deployment.</p>
+          <p>Trust is built-in. With features like <strong>reasoning path visualization</strong>, simulated abuse testing, and external expert audits, gpt-oss provides the tools you need for safe and responsible deployment.</p>
       </div>
 
       <div class="card">
           <h3><span>💼</span>Unrestricted Commercial Use</h3>
-          <p>Innovate without limits. The content you generate is yours to commercialize. Our <strong>business-friendly license</strong> empowers you to build products and services on GPT-OSS with legal peace of mind.</p>
+          <p>Innovate without limits. The content you generate is yours to commercialize. Our <strong>business-friendly license</strong> empowers you to build products and services on gpt-oss with legal peace of mind.</p>
       </div>
     </div>
   </section>

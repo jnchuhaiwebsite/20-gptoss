@@ -16,7 +16,7 @@
         <tbody>
           <tr>
             <td><strong>Free Plan</strong></td>
-            <td>Free credits on signup to experience GPT-OSS; Access to public Prompt Template Library.</td>
+            <td>Free credits on signup to experience gpt-oss; Access to public Prompt Template Library.</td>
             <td><strong>Free</strong></td>
           </tr>
           <tr>
