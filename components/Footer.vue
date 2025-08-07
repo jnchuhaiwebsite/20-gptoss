@@ -33,7 +33,7 @@
               <p>© 2025 gpt-oss All rights reserved.</p>
               <div>
                 <p class="text-blue-footertext text-sm">
-                  <a href="mailto:support@www.gptoss2.com" class="text-blue-h1 hover:text-blue-footerhover transition-colors">support@www.gptoss2.com</a>
+                  <a href="mailto:support@www.gptoss2.com" class="text-blue-h1 hover:text-blue-footerhover transition-colors">support@gptoss2.com</a>
                 </p>
               </div>
             </div>
