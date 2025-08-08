@@ -16,17 +16,16 @@
       <div class="space-y-6 text-blue-footertext leading-relaxed">
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">1. Acceptance of Terms</h2>
-          <p>By accessing or using the Wan 2.2 Plus AI Video Generator (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access our Service.</p>
+          <p>By accessing or using GPTOSS2 (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access our Service.</p>
         </section>
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">2. Service Description</h2>
-          <p>Wan 2.2 Plus provides an advanced AI-powered service for creating video content. Key features include:</p>
+          <p>GPTOSS2 provides an advanced AI-powered service for creating content. Key features include:</p>
           <ul class="list-disc pl-6 mt-2 space-y-2">
-            <li><strong class="text-blue-button">Text-to-Video Generation:</strong> Converting descriptive text prompts into high-quality video clips.</li>
-            <li><strong class="text-blue-button">Image-to-Video Generation:</strong> Animating static images based on your text prompts to create dynamic scenes.</li>
-            <li><strong class="text-blue-button">Advanced Creative Control:</strong> The ability to influence cinematic elements like camera movement and lighting through prompts.</li>
-            <li><strong class="text-blue-button">High-Quality Output:</strong> Support for multiple resolutions and aspect ratios to fit your project needs.</li>
+            <li><strong class="text-blue-button">AI Generation:</strong> Converting descriptive text prompts into various types of content.</li>
+            <li><strong class="text-blue-button">Advanced Creative Control:</strong> The ability to influence creative elements through detailed prompts.</li>
+            <li><strong class="text-blue-button">High-Quality Output:</strong> Support for multiple formats and specifications to fit your project needs.</li>
           </ul>
         </section>
 
@@ -44,16 +43,16 @@
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">4. Intellectual Property Rights</h2>
-          <p>Your content is yours. You retain full ownership of your Input Content. Furthermore, <strong class="text-blue-button">you own the rights to the videos you generate</strong> ("Generated Content") and can use them for any personal or commercial purpose.</p>
-          <p class="mt-2">By using the Service, you grant Wan 2.2 Plus a limited, worldwide, non-exclusive, royalty-free license to use, process, and store your Input Content solely for the purpose of providing and improving the Service for you. We are not responsible for the originality of Generated Content or its potential similarity to existing works.</p>
+          <p>Your content is yours. You retain full ownership of your Input Content. Furthermore, <strong class="text-blue-button">you own the rights to the content you generate</strong> ("Generated Content") and can use them for any personal or commercial purpose.</p>
+          <p class="mt-2">By using the Service, you grant GPTOSS2 a limited, worldwide, non-exclusive, royalty-free license to use, process, and store your Input Content solely for the purpose of providing and improving the Service for you. We are not responsible for the originality of Generated Content or its potential similarity to existing works.</p>
         </section>
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">5. Service Limitations</h2>
           <ul class="list-disc pl-6 mt-2 space-y-2">
-            <li><strong class="text-blue-button">Credit-Based System:</strong> Service usage is measured in "credits," which are consumed for each video generation.</li>
+            <li><strong class="text-blue-button">Usage Model:</strong> Service usage is measured according to the selected plan and features used.</li>
             <li><strong class="text-blue-button">Supported Language:</strong> English prompts are strongly recommended for optimal and predictable results.</li>
-            <li><strong class="text-blue-button">Generation Time:</strong> Processing may take approximately 1-2 minutes, depending on the selected quality and server load.</li>
+            <li><strong class="text-blue-button">Processing Time:</strong> Generation time may vary depending on the selected options and server load.</li>
             <li><strong class="text-blue-button">Fair Use:</strong> While we encourage creativity, automated, high-volume, or abusive usage patterns may be throttled to ensure service quality for all users.</li>
           </ul>
         </section>
@@ -77,9 +76,9 @@
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">7. Subscription and Payment Terms</h2>
           <p>We offer various service tiers to meet your needs:</p>
           <ul class="list-disc pl-6 mt-2 space-y-2">
-            <li><strong class="text-blue-button">Free Trial:</strong> New users receive a complimentary allocation of credits to test the service.</li>
-            <li><strong class="text-blue-button">Paid Plans:</strong> Subscriptions provide a recurring monthly allocation of credits and access to premium features like higher quality and no watermarks.</li>
-            <li>All subscription fees are processed securely through our payment provider, Stripe. Specific terms for plans are detailed on our pricing page.</li>
+            <li><strong class="text-blue-button">Free Trial:</strong> New users receive a complimentary allocation to test the service.</li>
+            <li><strong class="text-blue-button">Paid Plans:</strong> Subscriptions provide recurring monthly benefits and access to premium features.</li>
+            <li>All subscription fees are processed securely through our payment provider. Specific terms for plans are detailed on our pricing page.</li>
             <li>Subscription fees are non-refundable except as required by applicable law or as outlined in our refund policy.</li>
           </ul>
         </section>
@@ -96,7 +95,7 @@
 
         <section>
           <h2 class="text-2xl font-bold mb-4 text-blue-h1">10. Limitation of Liability</h2>
-          <p>To the maximum extent permitted by law, Wan 2.2 Plus shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising from your use of the Service.</p>
+          <p>To the maximum extent permitted by law, GPTOSS2 shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising from your use of the Service.</p>
         </section>
 
         <section>
@@ -122,11 +121,11 @@ definePageMeta({
 })
 
 useSeo({
-  title: 'Terms of Service | Wan 2.2 Plus AI Video Generator',
-  description: 'Review the terms and conditions for using Wan 2.2 Plus, the advanced AI platform for generating cinematic videos from text and images.'
+  title: 'Terms of Service | GPTOSS2',
+  description: 'Review the terms and conditions for using GPTOSS2, the powerful open-weight AI platform providing secure and private interactions.'
 })
 </script>
 
 <style>
 /* Scoped or global styles can be added here if needed, but Tailwind CSS is used primarily. */
-</style> 
+</style>

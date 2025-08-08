@@ -106,8 +106,8 @@ export default {
 			// --- 标题与渐变 (浅色背景下的优化效果) ---
 			h1: '#284bfb',              // [H1备用色] 渐变降级方案。
 			h1p: '#333333',             // [H2/副标题] 深色灰色，确保在浅色背景下的清晰可读性。
-			h1start: '#665ffa',        // [H1渐变起始] 保持不变。
-			h1end: '#4004ba',          // [H1渐变结束] 保持不变。
+			h1start: '#284bfb',        // [H1渐变起始] 保持不变。
+			h1end: '#284bfb',          // [H1渐变结束] 保持不变。
 			// CSS实现建议: h1 { background: linear-gradient(to right, #665ffa, #4004ba); -webkit-background-clip: text; background-clip: text; color: transparent; }
   
 			// --- 文本颜色 ---
