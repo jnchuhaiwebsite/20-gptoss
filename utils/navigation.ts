@@ -21,7 +21,6 @@ export const mainRoutes: RouteItem[] = [
   { id: "comparison", name: "Comparison", icon: "ChartBarIcon" },
   { id: "solutions", name: "Solutions", icon: "LightBulbIcon" },
   { id: "pricing", name: "Pricing", icon: "TagIcon" },
-  { id: "faq", name: "FAQ", icon: "QuestionMarkCircleIcon" },
 ]
 
 

@@ -16,6 +16,15 @@
       <strong>How is my privacy and data security protected?</strong>
       <p>Your security is our top priority. All inference happens in a controlled environment or on your local machine. We use strict account isolation and never call third-party services with your data.</p>
     </div>
+
+    <div class="text-center mt-10">
+        <NuxtLink
+          to="/faq"
+          class="cta-button"
+        >
+          Show More
+        </NuxtLink>
+      </div>
   </section>
 </template>
 
@@ -71,6 +80,25 @@ h2 {
   margin: 0;
   color: #555;
   line-height: 1.6;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary) 100%);
+  color: white;
+  padding: 0.875rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 75, 251, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 75, 251, 0.4);
+  background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary) 100%);
 }
 
 @media (max-width: 768px) {
