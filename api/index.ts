@@ -13,6 +13,7 @@ const baseUrl = process.env.NODE_ENV === 'development'
 // console.log('当前baseUrl:', baseUrl);
 // API接口URL列表
 export const urlList = {
+  chatCompletion: baseUrl + '/api/chat/completion',  // 聊天完成接口
   setUserInfo: baseUrl + '/api/user/auth',        // 设置用户信息
   getCurrentUser: baseUrl + '/api/user/info',   // 获取当前用户信息
   createTasksImgVideo: baseUrl + '/api/task/mj/make_video',     // 创建任务-图生视频
@@ -245,6 +246,20 @@ export const getOpusList = async (data: any) => {
  * @param data 统计信息数据
  * @returns 统计信息
  */
+/**
+ * 聊天完成请求
+ * @param data 聊天请求数据
+ * @returns 聊天响应
+ */
+export const chatCompletion = async (data: any) => {
+  try {
+    return await apiRequest(urlList.chatCompletion, 'POST', data, true);
+  } catch (error) {
+    console.error('聊天请求失败:', error);
+    throw error;
+  }
+}
+
 export const statistics = async (data: any) => {
   // 构建基础URL参数
   let url = `${urlList.statistics}?visitor_id=${data.userCode}`
