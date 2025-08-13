@@ -4,7 +4,7 @@ import { useRuntimeConfig } from 'nuxt/app'
 // console.log('当前环境:', process.env.NODE_ENV);
 
 const baseUrl = process.env.NODE_ENV === 'development'
-  ? 'https://art.gptoss2.com'
+  ? 'http://192.168.0.55:8686'
   : 'https://art.gptoss2.com';
 
 // const baseUrl = 'https://art.aimagen43.com';
@@ -15,7 +15,7 @@ const baseUrl = process.env.NODE_ENV === 'development'
 export const urlList = {
   chatCompletion: baseUrl + '/api/chat/completion',  // 聊天完成接口
   setUserInfo: baseUrl + '/api/user/auth',        // 设置用户信息
-  getCurrentUser: baseUrl + '/api/user/info',   // 获取当前用户信息
+
   createTasksImgVideo: baseUrl + '/api/task/mj/make_video',     // 创建任务-图生视频
   createTasksTextVideo: baseUrl + '/api/task/mj/make_video',     // 创建任务-文生视频
   getSubPlans: baseUrl + '/api/website/priceList',     // 获取套餐信息
@@ -41,6 +41,12 @@ export const urlList = {
   checkTask: baseUrl + '/api/task/wan2ai/check_task_status', // 检查任务
   opusList: baseUrl + '/api/user/opus_list', // 获取用户作品列表
   statistics: baseUrl + '/api/statistics/pvuv', // 删除用户作品列表
+  getChatUuid: baseUrl + '/api/task/gptoss/get_chat_uuid', // 获取聊天uuid
+  chat: baseUrl + '/api/talk/gptoss/chat', // 聊天
+  getChatList: baseUrl + '/api/task/gptoss/get_chat_list', // 获取聊天列表
+  getCurrentUser: baseUrl + '/api/user/chat_info',   // 获取当前用户信息
+  getChatDetails: baseUrl + '/api/task/gptoss/get_chat_details',   // 获取当前用户信息
+
 }
 
 /**
@@ -218,6 +224,41 @@ export const payOrder = async (data: any) => {
  */
 export const getUserOpus = async () => {
   return apiRequest(urlList.getUserOpus, 'GET', undefined, false);
+}
+
+/**
+ * 获取聊天uuid
+ * @returns 聊天uuid
+ */
+export const getChatUuid = async () => {
+  return apiRequest(urlList.getChatUuid, 'GET', undefined, false);
+}
+
+/**
+ * 获取聊天列表
+ * @returns 聊天列表
+ */
+export const getChatList = async () => {
+  return apiRequest(urlList.getChatList, 'GET', undefined, false);
+}
+
+
+/**
+ * 获取聊天列表
+ * @returns 聊天列表
+ */
+export const getChatDetails = async (group_id:string) => {
+  return apiRequest(urlList.getChatDetails+'?group_id='+group_id, 'GET', undefined, false);
+}
+
+/**
+ * 聊天
+ * @param taskId 任务id
+ * @param data 聊天数据
+ * @returns 聊天结果
+ */ 
+export const chat = async (taskId:string,data: any) => {
+  return apiRequest(urlList.chat+'?task_id='+taskId, 'GET', data, true);
 }
 
 /**
@@ -692,4 +733,6 @@ const apiRequest = async <T>(url: string, method: 'GET' | 'POST', data?: any, ne
     throw error;
   }
 }
+
+
 //////////////////////////////////////////////////////////////////////////////////////
