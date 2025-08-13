@@ -1,9 +1,9 @@
 <template>
-  <section id="pricing" class="py-20  bg-blue-light">
+  <section id="pricing" class="py-20 bg-blue-pale">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-blue-dark mb-6">Simple Plans for Every Creator</h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold text-blue-maintext mb-6">Simple Plans for Every Creator</h2>
+        <p class="text-xl text-blue-secondarytext max-w-3xl mx-auto">
           Start for free and scale as you grow. Find the perfect plan to unlock the full potential of Wan 2.2 Plus for your needs.
         </p>
       </div>
@@ -11,15 +11,15 @@
       <!-- 加载状态 -->
       <div v-if="pending" class="flex justify-center items-center py-20 w-full" aria-live="polite">
         <div
-          class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"
+          class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"
           aria-label="Loading pricing plans"
         ></div>
       </div>
 
       <!-- 错误状态 -->
       <div v-else-if="error" class="text-center py-20">
-        <div class="text-red-500 text-xl mb-4">Failed to load pricing plans</div>
-        <button @click="refreshData" class="px-6 py-3 bg-blue-dark text-white rounded-lg hover:bg-blue-medium transition-colors">
+        <div class="text-red-600 text-xl mb-4">Failed to load pricing plans</div>
+        <button @click="refreshData" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-[#3e8aff] transition-colors">
           Try Again
         </button>
       </div>
@@ -31,10 +31,10 @@
           v-for="(plan, index) in planData"
           :key="index"
           :class="[
-            'relative bg-white p-8 rounded-xl flex flex-col h-full transition-all duration-300',
+            'relative bg-blue-pricing p-8 rounded-xl flex flex-col h-full transition-all duration-300',
             plan.is_popular
-              ? 'border-2 border-blue-dark transform scale-105 shadow-xl z-10'
-              : 'border border-gray-200 hover:shadow-lg hover:-translate-y-1'
+              ? 'border-2 border-primary transform scale-105 shadow-xl z-10 bg-blue-light'
+              : 'border border-blue-pricingborder hover:shadow-lg hover:-translate-y-1 hover:border-primary hover:bg-blue-light'
           ]"
           :aria-labelledby="`plan-${index}-title`"
         >
@@ -43,22 +43,22 @@
             v-if="plan.is_popular"
             class="absolute -top-3 left-1/2 transform -translate-x-1/2"
           >
-            <span class="bg-blue-dark text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
+            <span class="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
           </div>
           
           <!-- 套餐标题 -->
           <div class="text-center">
             <h3 
               :id="`plan-${index}-title`"
-              class="text-xl font-semibold text-blue-dark mb-4"
+              class="text-xl font-semibold text-blue-pricingbordertext mb-4"
             >
               {{ plan.name }}
             </h3>
-            <div class="text-4xl font-bold text-blue-dark mb-4">
+            <div class="text-4xl font-bold text-blue-pricingbordertext mb-4">
               ${{ plan.price }}
-              <span v-if="plan.price > 0" class="text-lg text-gray-500 font-normal">one-time</span>
+              <span v-if="plan.price > 0" class="text-lg text-blue-secondarytext font-normal">one-time</span>
             </div>
-            <!-- <p class="text-gray-600 mb-8" v-html="plan.description"></p> -->
+            <!-- <p class="text-blue-pricingtext mb-8" v-html="plan.description"></p> -->
           </div>
           
           <!-- 操作按钮 -->
@@ -83,9 +83,9 @@
               <li
                 v-for="(feature, fIndex) in getPlanFeatures(plan)"
                 :key="fIndex"
-                class="flex items-center text-gray-600"
+                class="flex items-center text-blue-pricingtext"
               >
-                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-success mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
                 <span class="text-sm leading-relaxed" v-html="feature"></span>
@@ -163,11 +163,11 @@ const getPlanFeatures = (plan: PricingPlan): string[] => {
 // 获取按钮样式
 const getButtonClass = (plan: PricingPlan): string => {
   if (plan.price === 0) {
-    return "border border-blue-dark text-blue-dark hover:bg-blue-dark hover:text-white";
+    return "border border-primary text-primary hover:bg-primary hover:text-white";
   } else if (plan.is_popular) {
-    return "bg-blue-dark text-white hover:bg-blue-medium";
+    return "bg-primary text-white hover:bg-blue-buttonhover";
   } else {
-    return "border bg-blue-button text-white border-blue-dark text-blue-dark hover:bg-blue-dark hover:text-white";
+    return "bg-primary text-white hover:bg-blue-buttonhover";
   }
 };
 
