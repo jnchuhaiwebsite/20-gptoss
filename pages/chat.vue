@@ -103,17 +103,24 @@
                   </div>
                   <img v-else src="/favicon.ico" alt="Bot" class="w-8 h-8 rounded-full shadow-md flex-shrink-0">
                   
-                  <div v-if="message.isUser" class="rounded-xl p-4 text-base bg-blue-500 text-white">
+                  <div v-if="message.isUser" class="rounded-xl p-4 text-base bg-blue-500 text-white min-w-0 max-w-xl lg:max-w-2xl">
                     <div class="markdown-body">
                       <p style="white-space: pre-wrap;">{{ message.text }}</p>
                     </div>
                   </div>
 
-                  <div v-else class="flex flex-col items-start">
-                    <div class="rounded-xl p-4 text-base bg-white dark:bg-gray-700 shadow-sm">
-                      <div class="markdown-body" v-html="md.render(message.text)"></div>
+                  <!-- 这里给气泡也加上 min-w-0，避免被子元素撑出容器 -->
+                  <div v-else class="flex flex-col items-start max-w-xl lg:max-w-2xl min-w-0">
+                    <div class="rounded-xl p-4 text-base bg-white dark:bg-gray-700 shadow-sm min-w-0" style="max-width: 100%;">
+                      <!-- Streaming plain text -->
+                      <div v-if="message.isStreaming" class="markdown-body">
+                          <p style="white-space: pre-wrap;">{{ message.accumulatedText }}<span class="typing-cursor">|</span></p>
+                      </div>
+                      <!-- Rendered HTML -->
+                      <div v-else class="markdown-body" v-html="message.renderedHtml" style="min-width: 0;"></div>
                     </div>
-                    <div class="mt-2 transition-opacity duration-300 flex items-center gap-2">
+                    <!-- Toolbar for AI messages -->
+                    <div v-if="!message.isStreaming && message.text" class="mt-2 transition-opacity duration-300 flex items-center gap-2">
                       <button @click="copyToClipboard(message.text)" class="p-1.5 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none" title="Copy">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                       </button>
@@ -234,7 +241,6 @@ const { isSignedIn } = useClerkAuth();
 const checkAuthOnFocus = () => {
   if (!isSignedIn.value) {
     uiStore.showLoginPrompt();
-    // 失去焦点以防止用户在弹窗出现时继续输入
     if (textarea.value) {
       textarea.value.blur();
     }
@@ -244,19 +250,14 @@ const checkAuthOnFocus = () => {
 const userStore = useUserStore();
 
 const hasAuthToken = () => {
-  console.log('document.cookie', document.cookie.split(';').some((item) => item.trim().startsWith('auth_token=')));
   return document.cookie.split(';').some((item) => item.trim().startsWith('auth_token='));
 };
 
 const fetchHistoryWithTokenCheck = (retries = 5) => {
   if (hasAuthToken()) {
-    console.log('Token found, fetching history...');
     fetchChatHistory();
   } else if (retries > 0) {
-    console.log('Token not found, retrying in 1s...');
     setTimeout(() => fetchHistoryWithTokenCheck(retries - 1), 1000);
-  } else {
-    console.error('Failed to find auth token after multiple retries.');
   }
 };
 
@@ -274,7 +275,6 @@ const getUserAvatar = () => {
         document.cookie = 'user_avatar=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       }
     } catch (error) {
-      console.error('解析头像Cookie失败:', error);
       document.cookie = 'user_avatar=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
@@ -307,13 +307,10 @@ const textarea = ref(null);
 onMounted(async () => {
   try {
     await userStore.fetchUserInfo();
-  } catch (error) {
-    console.error('获取用户信息失败:', error);
-  }
-  
+  } catch (error) {}
+
   currentGroupId.value = `group_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-  
-  // Responsive sidebar
+
   updateScreenWidth();
   if (isMobileView.value) {
     isSidebarOpen.value = false;
@@ -352,11 +349,9 @@ const fetchChatHistory = async () => {
         messages: []
       }));
     } else {
-      console.error('获取聊天记录失败:', response);
       chatHistory.value = [];
     }
   } catch (error) {
-    console.error('获取聊天记录失败:', error);
     chatHistory.value = [];
   } finally {
     chatHistoryLoading.value = false;
@@ -370,9 +365,7 @@ const formatTimestamp = (taskId) => {
       const date = new Date(parseInt(timestamp));
       return date.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
     }
-  } catch (error) {
-    console.error('解析时间戳失败:', error);
-  }
+  } catch (error) {}
   return '刚刚';
 };
 
@@ -381,30 +374,20 @@ const adjustTextareaHeight = () => {
   if (el) {
     el.style.height = 'auto';
     const maxHeight = 200;
-    if (el.scrollHeight < maxHeight) {
-        el.style.height = `${el.scrollHeight}px`;
-    } else {
-        el.style.height = `${maxHeight}px`;
-    }
+    el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
   }
 };
 
-watch(newMessage, () => {
-    nextTick(adjustTextareaHeight);
-});
+watch(newMessage, () => nextTick(adjustTextareaHeight));
 
 watch(isSignedIn, (newValue) => {
-  if (newValue) {
-    fetchHistoryWithTokenCheck();
-  }
+  if (newValue) fetchHistoryWithTokenCheck();
 }, { immediate: true });
 
 watch(messages, () => {
-    nextTick(() => {
-        if (messages.value.length > 0) {
-            forceScrollToBottom();
-        }
-    });
+  nextTick(() => {
+    if (messages.value.length > 0) forceScrollToBottom();
+  });
 }, { deep: true });
 
 const scrollToBottom = () => {
@@ -427,9 +410,7 @@ const forceScrollToBottom = () => {
 let scrollTimeout = null;
 const debouncedScrollToBottom = () => {
   if (scrollTimeout) clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    forceScrollToBottom();
-  }, 100);
+  scrollTimeout = setTimeout(() => forceScrollToBottom(), 100);
 };
 
 const createNewChat = () => {
@@ -438,163 +419,161 @@ const createNewChat = () => {
   currentChatId.value = null;
   currentGroupId.value = `group_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
   nextTick(adjustTextareaHeight);
-  if (isMobileView.value) {
-    isSidebarOpen.value = false;
-  }
+  if (isMobileView.value) isSidebarOpen.value = false;
   fetchChatHistory();
 };
 
 const loadChat = async (chatId) => {
   const chat = chatHistory.value.find(c => c.id === chatId);
-  if (chat) {
-    currentChatId.value = chatId;
-    currentGroupId.value = chat.taskId || chatId;
-    
-    if (chat.messages.length === 0) {
-      try {
-        messages.value = [];
-        const response = await getChatDetails(currentGroupId.value);
-        if (response && response.code === 200 && Array.isArray(response.data)) {
-          const allMessages = response.data.flatMap((qaPair, index) => [
-            { id: `${chat.id}_q_${index}`, text: qaPair.question, isUser: true },
-            { id: `${chat.id}_a_${index}`, text: qaPair.msg, isUser: false }
-          ]);
-          messages.value = allMessages;
-          chat.messages = allMessages;
-        } else {
-          console.error('获取聊天详情失败:', response);
-          messages.value = [{ id: Date.now(), text: '无法加载聊天记录，请稍后重试。', isUser: false }];
-        }
-      } catch (error) {
-        console.error('加载聊天记录失败:', error);
-        messages.value = [{ id: Date.now(), text: '加载聊天记录时出错。', isUser: false }];
+  if (!chat) return;
+
+  currentChatId.value = chatId;
+  currentGroupId.value = chat.taskId || chatId;
+  
+  if (chat.messages.length === 0) {
+    try {
+      messages.value = [];
+      const response = await getChatDetails(currentGroupId.value);
+      if (response && response.code === 200 && Array.isArray(response.data)) {
+        const allMessages = response.data.flatMap((qaPair, index) => {
+          const userMessage = {
+            id: `${chat.id}_q_${index}`,
+            text: qaPair.question,
+            isUser: true,
+          };
+          const aiMessage = {
+            id: `${chat.id}_a_${index}`,
+            text: qaPair.msg,
+            isUser: false,
+            isStreaming: false,
+            accumulatedText: qaPair.msg,
+            renderedHtml: md.render(qaPair.msg),
+          };
+          return [userMessage, aiMessage];
+        });
+        messages.value = allMessages;
+        chat.messages = allMessages;
+      } else {
+        messages.value = [{ id: Date.now(), text: '无法加载聊天记录，请稍后重试。', isUser: false }];
       }
-    } else {
-      messages.value = [...chat.messages];
+    } catch (error) {
+      messages.value = [{ id: Date.now(), text: '加载聊天记录时出错。', isUser: false }];
     }
-    
-    newMessage.value = '';
-    if (isMobileView.value) {
-      isSidebarOpen.value = false;
-    }
-    nextTick(() => {
-      adjustTextareaHeight();
-      scrollToBottom();
-    });
+  } else {
+    messages.value = [...chat.messages];
   }
+  
+  newMessage.value = '';
+  if (isMobileView.value) isSidebarOpen.value = false;
+  nextTick(() => {
+    adjustTextareaHeight();
+    scrollToBottom();
+  });
 };
 
 const sendMessage = async () => {
-    const trimmedMessage = newMessage.value.trim();
-    if (trimmedMessage === '') return;
+  const trimmedMessage = newMessage.value.trim();
+  if (!trimmedMessage) return;
 
-    if (!currentChatId.value) {
-      const newChatId = currentGroupId.value;
-      currentChatId.value = newChatId;
-      const newChat = {
-        id: newChatId,
-        title: trimmedMessage.substring(0, 20),
-        lastMessage: '',
-        timestamp: formatTimestamp(newChatId),
-        taskId: newChatId,
-        messages: []
-      };
-      chatHistory.value.unshift(newChat);
-    }
+  if (!currentChatId.value) {
+    const newChatId = currentGroupId.value;
+    currentChatId.value = newChatId;
+    const newChat = {
+      id: newChatId,
+      title: trimmedMessage.substring(0, 20),
+      lastMessage: '',
+      timestamp: formatTimestamp(newChatId),
+      taskId: newChatId,
+      messages: []
+    };
+    chatHistory.value.unshift(newChat);
+  }
 
-    const userMessage = { id: Date.now(), text: trimmedMessage, isUser: true };
-    messages.value.push(userMessage);
+  const userMessage = { id: Date.now(), text: trimmedMessage, isUser: true };
+  messages.value.push(userMessage);
 
-    const chatIndex = chatHistory.value.findIndex(chat => chat.id === currentChatId.value);
-    if (chatIndex !== -1) {
-      chatHistory.value[chatIndex].messages.push(userMessage);
-    }
+  const chatIndex = chatHistory.value.findIndex(chat => chat.id === currentChatId.value);
+  if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(userMessage);
 
-    newMessage.value = '';
-    nextTick(adjustTextareaHeight);
-    scrollToBottom();
+  newMessage.value = '';
+  nextTick(adjustTextareaHeight);
+  scrollToBottom();
 
-    try {
-        const uuidResponse = await getChatUuid();
-        if (!uuidResponse?.data?.task_id) throw new Error('未获取到有效的task_id');
-        const taskId = uuidResponse.data.task_id;
+  try {
+    const uuidResponse = await getChatUuid();
+    if (!uuidResponse?.data?.task_id) throw new Error('未获取到有效的task_id');
+    const taskId = uuidResponse.data.task_id;
 
-        const chatId = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-        const groupId = currentGroupId.value;
+    const chatId = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    const groupId = currentGroupId.value;
 
-        const wsBaseUrl = process.env.NODE_ENV === 'development' ? 'wss://art.gptoss2.com' : 'wss://art.gptoss2.com';
-        const wsUrl = `${wsBaseUrl}/api/talk/gptoss/chat?task_id=${taskId}`;
-        const ws = new WebSocket(wsUrl);
+    const wsBaseUrl = process.env.NODE_ENV === 'development' ? 'wss://art.gptoss2.com' : 'wss://art.gptoss2.com';
+    const wsUrl = `${wsBaseUrl}/api/talk/gptoss/chat?task_id=${taskId}`;
+    const ws = new WebSocket(wsUrl);
 
-        let accumulatedMessage = '';
-        let aiMessageId = Date.now() + 1;
-        
-        const aiMessage = { id: aiMessageId, text: 'Thinking it over...', isUser: false };
-        messages.value.push(aiMessage);
-        if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(aiMessage);
-        
-        ws.onopen = () => {
-            const chatRequest = { input: trimmedMessage, uuid: chatId, group_id: groupId };
-            ws.send(JSON.stringify(chatRequest));
-        };
+    let aiMessageId = Date.now() + 1;
+    
+    const aiMessage = {
+      id: aiMessageId,
+      text: '',
+      isUser: false,
+      isStreaming: true,
+      accumulatedText: 'Thinking...',
+      renderedHtml: ''
+    };
+    messages.value.push(aiMessage);
+    if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(aiMessage);
 
-        ws.onmessage = (event) => {
-            try {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const response = JSON.parse(e.target.result);
-                        accumulatedMessage = handleWebSocketMessage(response, aiMessage, accumulatedMessage);
-                        if (response.stop === 1) ws.close();
-                    } catch (blobError) {
-                        console.error('解析Blob数据失败:', blobError);
-                    }
-                };
-                if (event.data instanceof Blob) {
-                    reader.readAsText(event.data);
-                } else {
-                    const response = JSON.parse(event.data);
-                    accumulatedMessage = handleWebSocketMessage(response, aiMessage, accumulatedMessage);
-                    if (response.stop === 1) ws.close();
-                }
-            } catch (error) {
-                console.error('解析WebSocket消息失败:', error);
-            }
-        };
+    ws.onopen = () => {
+      const chatRequest = { input: trimmedMessage, uuid: chatId, group_id: groupId };
+      ws.send(JSON.stringify(chatRequest));
+    };
 
-        ws.onerror = (error) => {
-            console.error('WebSocket 错误:', error);
-            aiMessage.text = '抱歉，连接出现问题，请重试。';
-        };
+    ws.onmessage = (event) => {
+      try {
+        const response = JSON.parse(event.data);
 
-    } catch (error) {
-        console.error('发送消息失败:', error);
-        messages.value.pop();
-    }
-};
-
-const handleWebSocketMessage = (response, aiMsg, currentAccumulated) => {
-    let newAccumulated = currentAccumulated;
-    if (response.msg?.trim()) {
-        if (aiMsg.text === 'Thinking it over...') newAccumulated = '';
-        newAccumulated += response.msg;
-        aiMsg.text = newAccumulated;
-        
-        const chatIndex = chatHistory.value.findIndex(chat => chat.id === currentChatId.value);
-        if (chatIndex !== -1) {
-            chatHistory.value[chatIndex].lastMessage = newAccumulated;
-            chatHistory.value[chatIndex].timestamp = new Date().toLocaleString();
+        if (aiMessage.accumulatedText === 'Thinking...') {
+          aiMessage.accumulatedText = '';
         }
-        nextTick(debouncedScrollToBottom);
-    }
-    return newAccumulated;
+        if (response.msg) {
+          aiMessage.accumulatedText += response.msg;
+        }
+        if (response.stop === 1) {
+          aiMessage.isStreaming = false;
+          aiMessage.text = aiMessage.accumulatedText;
+          aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
+          
+          const chat = chatHistory.value.find(c => c.id === currentChatId.value);
+          if (chat) {
+            chat.lastMessage = aiMessage.accumulatedText.substring(0, 30) + (aiMessage.accumulatedText.length > 30 ? '...' : '');
+            chat.timestamp = formatTimestamp(`group_${Date.now()}`);
+          }
+          
+          nextTick(debouncedScrollToBottom);
+          ws.close();
+        }
+      } catch (error) {
+        aiMessage.isStreaming = false;
+        aiMessage.accumulatedText = 'Error processing message.';
+        aiMessage.renderedHtml = '<p>Error processing message.</p>';
+      }
+    };
+
+    ws.onerror = () => {
+      aiMessage.text = '抱歉，连接出现问题，请重试。';
+    };
+
+  } catch (error) {
+    messages.value.pop();
+  }
 };
 
 const handleKeydown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-    }
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
 }
 </script>
 
@@ -606,49 +585,45 @@ const handleKeydown = (e) => {
 textarea { scrollbar-width: none; }
 textarea::-webkit-scrollbar { display: none; }
 
-.markdown-body { 
-  all: revert; 
-  word-break: break-word;
-}
-.markdown-body pre { background-color: #2d2d2d; color: #f8f8f2; padding: 1em; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; }
-.markdown-body code { font-family: 'Courier New', Courier, monospace; background-color: #e0e0e0; padding: 0.2em 0.4em; border-radius: 4px; }
-.dark .markdown-body code { background-color: #3a3a3a; }
-.markdown-body pre code { background-color: transparent; padding: 0; }
-.markdown-body ul, .markdown-body ol { padding-left: 2em; margin-top: 0.5em; margin-bottom: 0.5em; }
-.markdown-body li { margin-top: 0.2em; }
-.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { margin-top: 1em; margin-bottom: 0.5em; font-weight: 600; }
-.markdown-body blockquote { border-left: 4px solid #ccc; padding-left: 1em; margin-left: 0; color: #666; }
-.dark .markdown-body blockquote { border-color: #555; color: #999; }
-
-.table-wrapper {
-  overflow-x: auto;
+/* 默认：PC 横向滚动 */
+.markdown-body pre { 
+  background-color: #2d2d2d; 
+  color: #f8f8f2; 
+  padding: 1em; 
+  border-radius: 8px; 
+  overflow-x: auto;          /* 横向滚动 */
+  overflow-y: hidden;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: pre;          /* 保持原始格式 */
+  font-family: 'Courier New', Courier, monospace;
+  -webkit-overflow-scrolling: touch; /* 移动端滚动更流畅 */
 }
 
-.markdown-body table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1em 0;
+/* 美化滚动条（横向时更窄） */
+.markdown-body pre::-webkit-scrollbar {
+  height: 6px;
+}
+.markdown-body pre::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+.dark .markdown-body pre::-webkit-scrollbar-thumb {
+  background: #999;
 }
 
-.markdown-body th,
-.markdown-body td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+/* 移动端优化：小屏幕改为自动换行，避免横向滚动条难看 */
+@media (max-width: 768px) {
+  .markdown-body pre {
+    font-size: 0.85rem;          /* 缩小字体 */
+    padding: 0.75em;             /* 缩小 padding */
+    white-space: pre-wrap;       /* 自动换行 */
+    word-break: break-word;      /* 允许断行 */
+    overflow-x: hidden;          /* 禁用横向滚动 */
+  }
 }
 
-.dark .markdown-body th,
-.dark .markdown-body td {
-  border-color: #444;
-}
 
-.markdown-body th {
-  background-color: #f2f2f2;
-}
-
-.dark .markdown-body th {
-  background-color: #2d2d2d;
-}
+/* ⚠️ 已移除 .rounded-xl { overflow: hidden; }，避免裁掉代码块滚动条 */
 </style>
-
