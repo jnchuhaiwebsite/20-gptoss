@@ -14,13 +14,13 @@ const baseUrl = process.env.NODE_ENV === 'development'
 // API接口URL列表
 export const urlList = {
   chatCompletion: baseUrl + '/api/chat/completion',  // 聊天完成接口
-  setUserInfo: baseUrl + '/api/user/auth',        // 设置用户信息
+
 
   createTasksImgVideo: baseUrl + '/api/task/mj/make_video',     // 创建任务-图生视频
   createTasksTextVideo: baseUrl + '/api/task/mj/make_video',     // 创建任务-文生视频
   getSubPlans: baseUrl + '/api/website/priceList',     // 获取套餐信息
   getSubplansTest: baseUrl + '/api/website/odl',     // 获取测试套餐信息
-  payOrder: baseUrl + '/api/pay/creem',  // 支付
+  payOrder: baseUrl + '/api/pay/stripe',  // 支付
 
 
   friendLinkList: baseUrl + '/api/cms/friendLinkList', // 获取友情链接列表
@@ -36,6 +36,7 @@ export const urlList = {
   createTasks: baseUrl + '/api/task/mj/create',  // 创建任务
 
   //wan2ai
+  setUserInfo: baseUrl + '/api/user/auth',        // 设置用户信息
   text2video: baseUrl + '/api/task/wan2ai/text2video',  // 创建任务-文生视频
   image2video: baseUrl + '/api/task/wan2ai/image2video',  // 创建任务-图生视频
   checkTask: baseUrl + '/api/task/wan2ai/check_task_status', // 检查任务

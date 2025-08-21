@@ -51,7 +51,7 @@ export function useSeo(options: SeoOptions = {} as SeoOptions) {
       { property: 'og:type', content: options.ogType || 'website' },
       { property: 'og:url', content: fullUrlWithoutSlash },
       { property: 'og:image', content: options.ogImage || `${baseUrl}/gpt-oss.webp` },
-      { property: 'og:site_name', content: 'hailuo2' },
+      { property: 'og:site_name', content: 'Gptoss' },
       ...(options.other || []),
 
       // Twitter Card

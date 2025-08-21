@@ -18,10 +18,10 @@ export const mainRoutes: RouteItem[] = [
   { id: "intro", name: "Home", icon: "HomeIcon" },
   { id: "chat", name: "chat", icon: "chat",href:"/chat" },
   { id: "for-whom", name: "For Who", icon: "UserGroupIcon" },
-  { id: "advantages", name: "Advantages", icon: "SparklesIcon" },
-  { id: "comparison", name: "Comparison", icon: "ChartBarIcon" },
-  { id: "solutions", name: "Solutions", icon: "LightBulbIcon" },
-  { id: "pricing", name: "Pricing", icon: "TagIcon" },
+  { id: "advantages", name: "Advantages", },
+  { id: "comparison", name: "Comparison", },
+  { id: "solutions", name: "Solutions" },
+  { id: "pricing", name: "Pricing" },
 ]
 
 
