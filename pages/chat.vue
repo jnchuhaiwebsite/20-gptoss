@@ -190,6 +190,14 @@ const md = new MarkdownIt({
   }
 });
 
+// Add a wrapper to tables to make them scrollable
+md.renderer.rules.table_open = function () {
+  return '<div class="table-wrapper"><table class="table">';
+};
+md.renderer.rules.table_close = function () {
+  return '</table></div>';
+};
+
 const copyToClipboard = async (text) => {
   try {
     const plainText = text.replace(/<[^>]*>?/gm, '');
@@ -234,6 +242,23 @@ const checkAuthOnFocus = () => {
 };
 
 const userStore = useUserStore();
+
+const hasAuthToken = () => {
+  console.log('document.cookie', document.cookie.split(';').some((item) => item.trim().startsWith('auth_token=')));
+  return document.cookie.split(';').some((item) => item.trim().startsWith('auth_token='));
+};
+
+const fetchHistoryWithTokenCheck = (retries = 5) => {
+  if (hasAuthToken()) {
+    console.log('Token found, fetching history...');
+    fetchChatHistory();
+  } else if (retries > 0) {
+    console.log('Token not found, retrying in 1s...');
+    setTimeout(() => fetchHistoryWithTokenCheck(retries - 1), 1000);
+  } else {
+    console.error('Failed to find auth token after multiple retries.');
+  }
+};
 
 const getUserAvatar = () => {
   if (typeof window === 'undefined') return null;
@@ -285,8 +310,6 @@ onMounted(async () => {
   } catch (error) {
     console.error('获取用户信息失败:', error);
   }
-  
-  await fetchChatHistory();
   
   currentGroupId.value = `group_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
   
@@ -370,6 +393,12 @@ watch(newMessage, () => {
     nextTick(adjustTextareaHeight);
 });
 
+watch(isSignedIn, (newValue) => {
+  if (newValue) {
+    fetchHistoryWithTokenCheck();
+  }
+}, { immediate: true });
+
 watch(messages, () => {
     nextTick(() => {
         if (messages.value.length > 0) {
@@ -409,7 +438,9 @@ const createNewChat = () => {
   currentChatId.value = null;
   currentGroupId.value = `group_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
   nextTick(adjustTextareaHeight);
-  isSidebarOpen.value = false;
+  if (isMobileView.value) {
+    isSidebarOpen.value = false;
+  }
   fetchChatHistory();
 };
 
@@ -575,7 +606,10 @@ const handleKeydown = (e) => {
 textarea { scrollbar-width: none; }
 textarea::-webkit-scrollbar { display: none; }
 
-.markdown-body { all: revert; }
+.markdown-body { 
+  all: revert; 
+  word-break: break-word;
+}
 .markdown-body pre { background-color: #2d2d2d; color: #f8f8f2; padding: 1em; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; }
 .markdown-body code { font-family: 'Courier New', Courier, monospace; background-color: #e0e0e0; padding: 0.2em 0.4em; border-radius: 4px; }
 .dark .markdown-body code { background-color: #3a3a3a; }
@@ -585,5 +619,36 @@ textarea::-webkit-scrollbar { display: none; }
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { margin-top: 1em; margin-bottom: 0.5em; font-weight: 600; }
 .markdown-body blockquote { border-left: 4px solid #ccc; padding-left: 1em; margin-left: 0; color: #666; }
 .dark .markdown-body blockquote { border-color: #555; color: #999; }
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.dark .markdown-body th,
+.dark .markdown-body td {
+  border-color: #444;
+}
+
+.markdown-body th {
+  background-color: #f2f2f2;
+}
+
+.dark .markdown-body th {
+  background-color: #2d2d2d;
+}
 </style>
 
