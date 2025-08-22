@@ -66,13 +66,13 @@
         <header class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
           <div class="flex items-center space-x-4">
             <button v-if="!isSidebarOpen" @click="isSidebarOpen = true" class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300" title="Expand Sidebar">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
           </div>
         </header>
 
         <section class="flex-1 flex flex-col overflow-y-hidden h-full">
-          <div v-if="messages.length === 0" class="flex-1 flex flex-col justify-center items-center text-center p-4 md:p-6">
+          <div v-if="messages.length === 0" class="flex-1 flex flex-col justify-center items-center text中心 p-4 md:p-6">
             <img src="/favicon.ico" alt="Gpt Oss Logo" class="w-16 h-16 mb-4 rounded-full shadow-md" />
             <h2 class="text-4xl font-bold mb-8">Hi, I'm Gpt Oss</h2>
             <p class="text-xl text-gray-600 dark:text-gray-300 mb-2">What can I help you with?</p>
@@ -103,23 +103,22 @@
                   </div>
                   <img v-else src="/favicon.ico" alt="Bot" class="w-8 h-8 rounded-full shadow-md flex-shrink-0">
                   
+                  <!-- User bubble -->
                   <div v-if="message.isUser" class="rounded-xl p-4 text-base bg-blue-500 text-white min-w-0 max-w-xl lg:max-w-2xl">
                     <div class="markdown-body">
                       <p style="white-space: pre-wrap;">{{ message.text }}</p>
                     </div>
                   </div>
 
-                  <!-- 这里给气泡也加上 min-w-0，避免被子元素撑出容器 -->
+                  <!-- AI bubble -->
                   <div v-else class="flex flex-col items-start max-w-xl lg:max-w-2xl min-w-0">
                     <div class="rounded-xl p-4 text-base bg-white dark:bg-gray-700 shadow-sm min-w-0" style="max-width: 100%;">
-                      <!-- Streaming plain text -->
-                      <div v-if="message.isStreaming" class="markdown-body">
-                          <p style="white-space: pre-wrap;">{{ message.accumulatedText }}<span class="typing-cursor">|</span></p>
-                      </div>
-                      <!-- Rendered HTML -->
-                      <div v-else class="markdown-body" v-html="message.renderedHtml" style="min-width: 0;"></div>
+                      <!-- 始终用 renderedHtml，流式边收边渲染 -->
+                      <div class="markdown-body" v-html="message.renderedHtml" style="min-width: 0;"></div>
+                      <!-- 打字光标（可选） -->
+                      <span v-if="message.isStreaming" class="typing-cursor ml-0.5">|</span>
                     </div>
-                    <!-- Toolbar for AI messages -->
+                    <!-- Toolbar -->
                     <div v-if="!message.isStreaming && message.text" class="mt-2 transition-opacity duration-300 flex items-center gap-2">
                       <button @click="copyToClipboard(message.text)" class="p-1.5 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none" title="Copy">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
@@ -162,7 +161,7 @@
 import { useNuxtApp } from 'nuxt/app'
 import { ref, nextTick, watch, onMounted, computed, onUnmounted } from 'vue';
 import { useUserStore } from '~/stores/user';
-import { getChatUuid, chat, getChatList, getChatDetails } from '~/api';
+import { getChatUuid, getChatList, getChatDetails } from '~/api';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
@@ -197,7 +196,7 @@ const md = new MarkdownIt({
   }
 });
 
-// Add a wrapper to tables to make them scrollable
+// Make tables scrollable
 md.renderer.rules.table_open = function () {
   return '<div class="table-wrapper"><table class="table">';
 };
@@ -222,7 +221,7 @@ const downloadAsMd = (answer, question) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    const fileName = question.replace(/[\\/:*?"<>|]/g, '').substring(0, 50).trim() || 'response';
+    const fileName = (question || 'response').replace(/[\\/:*?"<>|]/g, '').substring(0, 50).trim() || 'response';
     link.download = `${fileName}.md`;
     document.body.appendChild(link);
     link.click();
@@ -241,9 +240,7 @@ const { isSignedIn } = useClerkAuth();
 const checkAuthOnFocus = () => {
   if (!isSignedIn.value) {
     uiStore.showLoginPrompt();
-    if (textarea.value) {
-      textarea.value.blur();
-    }
+    if (textarea.value) textarea.value.blur();
   }
 };
 
@@ -269,12 +266,9 @@ const getUserAvatar = () => {
     try {
       const avatarData = JSON.parse(decodeURIComponent(avatarCookie.split('=')[1]));
       const expireTime = avatarData.expireTime;
-      if (expireTime && Date.now() < expireTime) {
-        return avatarData.avatarUrl;
-      } else {
-        document.cookie = 'user_avatar=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      }
-    } catch (error) {
+      if (expireTime && Date.now() < expireTime) return avatarData.avatarUrl;
+      else document.cookie = 'user_avatar=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    } catch {
       document.cookie = 'user_avatar=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
@@ -305,29 +299,19 @@ const newMessage = ref('');
 const textarea = ref(null);
 
 onMounted(async () => {
-  try {
-    await userStore.fetchUserInfo();
-  } catch (error) {}
+  try { await userStore.fetchUserInfo(); } catch {}
 
   currentGroupId.value = `group_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
   updateScreenWidth();
-  if (isMobileView.value) {
-    isSidebarOpen.value = false;
-  }
+  if (isMobileView.value) isSidebarOpen.value = false;
   window.addEventListener('resize', updateScreenWidth);
 
-  nextTick(() => {
-    if (messages.value.length > 0) {
-      scrollToBottom();
-    }
-  });
+  nextTick(() => { if (messages.value.length > 0) scrollToBottom(); });
 });
 
 onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', updateScreenWidth);
-  }
+  if (typeof window !== 'undefined') window.removeEventListener('resize', updateScreenWidth);
 });
 
 const chatHistory = ref([]);
@@ -351,7 +335,7 @@ const fetchChatHistory = async () => {
     } else {
       chatHistory.value = [];
     }
-  } catch (error) {
+  } catch {
     chatHistory.value = [];
   } finally {
     chatHistoryLoading.value = false;
@@ -365,8 +349,8 @@ const formatTimestamp = (taskId) => {
       const date = new Date(parseInt(timestamp));
       return date.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
     }
-  } catch (error) {}
-  return '刚刚';
+  } catch {}
+  return 'Just now';
 };
 
 const adjustTextareaHeight = () => {
@@ -385,9 +369,7 @@ watch(isSignedIn, (newValue) => {
 }, { immediate: true });
 
 watch(messages, () => {
-  nextTick(() => {
-    if (messages.value.length > 0) forceScrollToBottom();
-  });
+  nextTick(() => { if (messages.value.length > 0) forceScrollToBottom(); });
 }, { deep: true });
 
 const scrollToBottom = () => {
@@ -454,10 +436,10 @@ const loadChat = async (chatId) => {
         messages.value = allMessages;
         chat.messages = allMessages;
       } else {
-        messages.value = [{ id: Date.now(), text: '无法加载聊天记录，请稍后重试。', isUser: false }];
+        messages.value = [{ id: Date.now(), text: 'Failed to load chat history. Please try again later.', isUser: false }];
       }
-    } catch (error) {
-      messages.value = [{ id: Date.now(), text: '加载聊天记录时出错。', isUser: false }];
+    } catch {
+              messages.value = [{ id: Date.now(), text: 'Error occurred while loading chat history.', isUser: false }];
     }
   } else {
     messages.value = [...chat.messages];
@@ -465,10 +447,7 @@ const loadChat = async (chatId) => {
   
   newMessage.value = '';
   if (isMobileView.value) isSidebarOpen.value = false;
-  nextTick(() => {
-    adjustTextareaHeight();
-    scrollToBottom();
-  });
+  nextTick(() => { adjustTextareaHeight(); scrollToBottom(); });
 };
 
 const sendMessage = async () => {
@@ -501,7 +480,7 @@ const sendMessage = async () => {
 
   try {
     const uuidResponse = await getChatUuid();
-    if (!uuidResponse?.data?.task_id) throw new Error('未获取到有效的task_id');
+            if (!uuidResponse?.data?.task_id) throw new Error('Failed to get valid task_id');
     const taskId = uuidResponse.data.task_id;
 
     const chatId = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
@@ -513,58 +492,116 @@ const sendMessage = async () => {
 
     let aiMessageId = Date.now() + 1;
     
+    // 初始化流式消息
     const aiMessage = {
       id: aiMessageId,
-      text: '',
+      text: '',                // 完整 Markdown（结束时赋值）
       isUser: false,
       isStreaming: true,
-      accumulatedText: 'Thinking...',
-      renderedHtml: ''
+      accumulatedText: '',     // 累加中的 Markdown
+      renderedHtml: '',        // 实时渲染出的 HTML
+             // 移除节流定时器，实现真正的流式渲染
     };
     messages.value.push(aiMessage);
     if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(aiMessage);
+
+                   // 移除这个函数，直接在 onmessage 中处理
 
     ws.onopen = () => {
       const chatRequest = { input: trimmedMessage, uuid: chatId, group_id: groupId };
       ws.send(JSON.stringify(chatRequest));
     };
 
-    ws.onmessage = (event) => {
-      try {
-        const response = JSON.parse(event.data);
+         // === 处理 stop: 0(进行中) / 1(结束) / -1(错误) ===
+     ws.onmessage = (event) => {
+       try {
+         const response = JSON.parse(event.data);
+         const { msg, stop } = response;
+         
+         console.log('[WebSocket] Received chunk:', { 
+           msgLength: msg?.length || 0, 
+           stop, 
+           timestamp: new Date().toISOString() 
+         });
 
-        if (aiMessage.accumulatedText === 'Thinking...') {
-          aiMessage.accumulatedText = '';
+                   if (typeof msg === 'string' && msg.length) {
+            aiMessage.accumulatedText += msg;
+            console.log('[Streaming] Accumulated text length:', aiMessage.accumulatedText.length);
+            
+            // 强制触发响应式更新 - 使用 triggerRef 确保立即更新
+            aiMessage.renderedHtml = md.render(aiMessage.accumulatedText || '');
+            
+            // 强制触发 Vue 响应式更新
+            messages.value = [...messages.value];
+            
+            // 立即滚动到底部
+            nextTick(() => {
+              if (messageContainer.value) {
+                messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
+              }
+            });
+          }
+
+        if (stop === 0 || stop === undefined) {
+          return; // 继续等待
         }
-        if (response.msg) {
-          aiMessage.accumulatedText += response.msg;
-        }
-        if (response.stop === 1) {
-          aiMessage.isStreaming = false;
-          aiMessage.text = aiMessage.accumulatedText;
-          aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
-          
+
+                 const finalize = (extraMd) => {
+           aiMessage.isStreaming = false;
+           if (extraMd) aiMessage.accumulatedText += extraMd;
+           aiMessage.text = aiMessage.accumulatedText;
+           aiMessage.renderedHtml = md.render(aiMessage.accumulatedText || '');
+
           const chat = chatHistory.value.find(c => c.id === currentChatId.value);
           if (chat) {
             chat.lastMessage = aiMessage.accumulatedText.substring(0, 30) + (aiMessage.accumulatedText.length > 30 ? '...' : '');
             chat.timestamp = formatTimestamp(`group_${Date.now()}`);
           }
-          
           nextTick(debouncedScrollToBottom);
           ws.close();
+        };
+
+        if (stop === 1) {
+          finalize();
+          return;
         }
-      } catch (error) {
-        aiMessage.isStreaming = false;
-        aiMessage.accumulatedText = 'Error processing message.';
-        aiMessage.renderedHtml = '<p>Error processing message.</p>';
-      }
+
+        if (stop === -1) {
+          // Check if it's a usage limit error
+          if (response.msg === 'insufficient user usage limit') {
+            try { $toast.error('Usage limit exceeded. Please upgrade your plan.'); } catch {}
+            finalize('\n\n> **Error:** Usage limit exceeded. Please upgrade your plan.');
+            // Redirect to pricing page after a short delay
+            setTimeout(() => {
+              window.location.href = '/pricing';
+            }, 2000);
+            return;
+          }
+          
+          try { $toast.error('Message stream aborted'); } catch {}
+          finalize('\n\n> **Error:** message stream aborted.');
+          return;
+        }
+
+             } catch (error) {
+         aiMessage.isStreaming = false;
+         aiMessage.accumulatedText += '\n\n> **Error:** invalid message payload.';
+         aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
+         try { $toast.error('Failed to parse message'); } catch {}
+         ws.close();
+       }
     };
 
-    ws.onerror = () => {
-      aiMessage.text = '抱歉，连接出现问题，请重试。';
-    };
+         ws.onerror = () => {
+       aiMessage.isStreaming = false;
+       aiMessage.accumulatedText += '\n\n> **Error:** connection error.';
+       aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
+       try { $toast.error('Connection error'); } catch {}
+       ws.close();
+     };
 
   } catch (error) {
+    console.error('发送消息失败:', error);
     messages.value.pop();
   }
 };
@@ -585,45 +622,102 @@ const handleKeydown = (e) => {
 textarea { scrollbar-width: none; }
 textarea::-webkit-scrollbar { display: none; }
 
-/* 默认：PC 横向滚动 */
+.typing-cursor {
+  display: inline-block;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink { to { visibility: hidden; } }
+
+.markdown-body { 
+  all: revert; 
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== 代码块（块级）样式：PC 横向滚动；不撑破气泡 ===== */
 .markdown-body pre { 
   background-color: #2d2d2d; 
   color: #f8f8f2; 
   padding: 1em; 
   border-radius: 8px; 
-  overflow-x: auto;          /* 横向滚动 */
+  overflow-x: auto;          /* 横向滚动条 */
   overflow-y: hidden;
   width: 100%;
   max-width: 100%;
-  box-sizing: border-box;
-  white-space: pre;          /* 保持原始格式 */
+  box-sizing: border-box; 
+  white-space: pre; 
   font-family: 'Courier New', Courier, monospace;
-  -webkit-overflow-scrolling: touch; /* 移动端滚动更流畅 */
+  -webkit-overflow-scrolling: touch;
 }
+/* 美化横向滚动条 */
+.markdown-body pre::-webkit-scrollbar { height: 6px; }
+.markdown-body pre::-webkit-scrollbar-thumb { background: #666; border-radius: 4px; }
+.dark .markdown-body pre::-webkit-scrollbar-thumb { background: #999; }
 
-/* 美化滚动条（横向时更窄） */
-.markdown-body pre::-webkit-scrollbar {
-  height: 6px;
-}
-.markdown-body pre::-webkit-scrollbar-thumb {
-  background: #666;
-  border-radius: 4px;
-}
-.dark .markdown-body pre::-webkit-scrollbar-thumb {
-  background: #999;
-}
-
-/* 移动端优化：小屏幕改为自动换行，避免横向滚动条难看 */
+/* 移动端：自动换行（若希望移动端也横向滚动，可删除此段） */
 @media (max-width: 768px) {
   .markdown-body pre {
-    font-size: 0.85rem;          /* 缩小字体 */
-    padding: 0.75em;             /* 缩小 padding */
-    white-space: pre-wrap;       /* 自动换行 */
-    word-break: break-word;      /* 允许断行 */
-    overflow-x: hidden;          /* 禁用横向滚动 */
+    font-size: 0.85rem;
+    padding: 0.75em;
+    white-space: pre-wrap;   /* 自动换行 */
+    word-break: break-word;
+    overflow-x: hidden;      /* 隐藏横向滚动条 */
   }
 }
 
+.markdown-body pre code { 
+  background-color: transparent; 
+  padding: 0; 
+  display: block; 
+  white-space: inherit; 
+  word-break: normal;
+  overflow-wrap: normal;
+  box-sizing: border-box;
+}
 
-/* ⚠️ 已移除 .rounded-xl { overflow: hidden; }，避免裁掉代码块滚动条 */
+/* 行内代码（与块级分离） */
+.markdown-body p code,
+.markdown-body li code,
+.markdown-body h1 code,
+.markdown-body h2 code,
+.markdown-body h3 code,
+.markdown-body h4 code,
+.markdown-body h5 code,
+.markdown-body h6 code {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #e0e0e0;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.dark .markdown-body p code,
+.dark .markdown-body li code,
+.dark .markdown-body h1 code,
+.dark .markdown-body h2 code,
+.dark .markdown-body h3 code,
+.dark .markdown-body h4 code,
+.dark .markdown-body h5 code,
+.dark .markdown-body h6 code {
+  background-color: #3a3a3a;
+}
+
+/* 列表/标题/引用等 */
+.markdown-body ul, .markdown-body ol { padding-left: 2em; margin-top: 0.5em; margin-bottom: 0.5em; }
+.markdown-body li { margin-top: 0.2em; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { margin-top: 1em; margin-bottom: 0.5em; font-weight: 600; }
+.markdown-body blockquote { border-left: 4px solid #ccc; padding-left: 1em; margin-left: 0; color: #666; }
+.dark .markdown-body blockquote { border-color: #555; color: #999; }
+
+/* 表格滚动容器 */
+.table-wrapper { overflow-x: auto; width: 100%; }
+.markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+.markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+.dark .markdown-body th, .dark .markdown-body td { border-color: #444; }
+.markdown-body th { background-color: #f2f2f2; }
+.dark .markdown-body th { background-color: #2d2d2d; }
 </style>
