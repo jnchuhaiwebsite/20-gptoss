@@ -62,7 +62,8 @@
         </div>
       </aside>
 
-      <main class="flex-1 flex flex-col">
+      <!-- 关键：main 加 min-w-0，避免子项撑宽 -->
+      <main class="flex-1 flex flex-col min-w-0">
         <header class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
           <div class="flex items-center space-x-4">
             <button v-if="!isSidebarOpen" @click="isSidebarOpen = true" class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300" title="Expand Sidebar">
@@ -71,7 +72,8 @@
           </div>
         </header>
 
-        <section class="flex-1 flex flex-col overflow-y-hidden h-full">
+        <!-- 关键：section 加 min-w-0 -->
+        <section class="flex-1 flex flex-col overflow-y-hidden h-full min-w-0">
           <div v-if="messages.length === 0" class="flex-1 flex flex-col justify-center items-center text中心 p-4 md:p-6">
             <img src="/favicon.ico" alt="Gpt Oss Logo" class="w-16 h-16 mb-4 rounded-full shadow-md" />
             <h2 class="text-4xl font-bold mb-8">Hi, I'm Gpt Oss</h2>
@@ -96,8 +98,10 @@
           
           <div v-else ref="messageContainer" class="flex-1 overflow-y-auto pb-4 p-4 md:p-6 scroll-smooth bg-gray-50 dark:bg-gray-800">
             <div class="max-w-3xl mx-auto w-full space-y-6">
-              <div v-for="(message, index) in messages" :key="message.id" class="flex" :class="message.isUser ? 'justify-end' : 'justify-start'">
-                <div class="flex items-start gap-4" :class="message.isUser ? 'flex-row-reverse' : 'flex-row'">
+              <!-- 关键：外层循环容器也加 min-w-0 -->
+              <div v-for="(message, index) in messages" :key="message.id" class="flex min-w-0" :class="message.isUser ? 'justify-end' : 'justify-start'">
+                <!-- 关键：这里已有 min-w-0，保留 -->
+                <div class="flex items-start gap-4 min-w-0" :class="message.isUser ? 'flex-row-reverse' : 'flex-row'">
                   <div v-if="message.isUser" class="flex-shrink-0">
                     <img :src="userAvatar" alt="User Avatar" class="w-8 h-8 rounded-full object-cover">
                   </div>
@@ -497,12 +501,12 @@ const loadChat = async (chatId) => {
           return [userMessage, aiMessage];
         });
         chat.messages = allMessages;
-        messages.value = [...allMessages]; // Use a copy for the reactive display array
+        messages.value = [...allMessages];
       } else {
         messages.value = [{ id: Date.now(), text: 'Failed to load chat history. Please try again later.', isUser: false }];
       }
     } catch {
-              messages.value = [{ id: Date.now(), text: 'Error occurred while loading chat history.', isUser: false }];
+      messages.value = [{ id: Date.now(), text: 'Error occurred while loading chat history.', isUser: false }];
     }
   } else {
     messages.value = [...chat.messages];
@@ -520,9 +524,8 @@ const sendMessage = async () => {
   let activeChatId = currentChatId.value;
   let activeGroupId = currentGroupId.value;
 
-  // If this is the first message of a new chat, create the chat entry first.
   if (!activeChatId) {
-    activeChatId = activeGroupId; // Use the pre-generated groupId for the new chat ID
+    activeChatId = activeGroupId;
     currentChatId.value = activeChatId;
     const newChat = {
       id: activeChatId,
@@ -549,7 +552,7 @@ const sendMessage = async () => {
 
   try {
     const uuidResponse = await getChatUuid();
-            if (!uuidResponse?.data?.task_id) throw new Error('Failed to get valid task_id');
+    if (!uuidResponse?.data?.task_id) throw new Error('Failed to get valid task_id');
     const taskId = uuidResponse.data.task_id;
 
     const messageUuid = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
@@ -563,10 +566,10 @@ const sendMessage = async () => {
     // 初始化流式消息
     const aiMessage = {
       id: aiMessageId,
-      text: '',                // 完整 Markdown（结束时赋值）
+      text: '',
       isUser: false,
       isStreaming: true,
-      accumulatedText: '',     // 累加中的 Markdown
+      accumulatedText: '',
     };
     messages.value.push(aiMessage);
     
@@ -579,41 +582,27 @@ const sendMessage = async () => {
       ws.send(JSON.stringify(chatRequest));
     };
 
-         // === 处理 stop: 0(进行中) / 1(结束) / -1(错误) ===
-     ws.onmessage = (event) => {
-       try {
-         const response = JSON.parse(event.data);
-         const { msg, stop } = response;
-         
-         console.log('[WebSocket] Received chunk:', { 
-           msgLength: msg?.length || 0, 
-           stop, 
-           timestamp: new Date().toISOString() 
-         });
+    ws.onmessage = (event) => {
+      try {
+        const response = JSON.parse(event.data);
+        const { msg, stop } = response;
 
-                   if (typeof msg === 'string' && msg.length) {
-            aiMessage.accumulatedText += msg;
-            console.log('[Streaming] Accumulated text length:', aiMessage.accumulatedText.length);
-            
-            // 强制触发 Vue 响应式更新
-            messages.value = [...messages.value];
-            
-            // 立即滚动到底部
-            nextTick(() => {
-              if (messageContainer.value) {
-                messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
-              }
-            });
-          }
-
-        if (stop === 0 || stop === undefined) {
-          return; // 继续等待
+        if (typeof msg === 'string' && msg.length) {
+          aiMessage.accumulatedText += msg;
+          messages.value = [...messages.value];
+          nextTick(() => {
+            if (messageContainer.value) {
+              messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
+            }
+          });
         }
 
-                 const finalize = (extraMd) => {
-           aiMessage.isStreaming = false;
-           if (extraMd) aiMessage.accumulatedText += extraMd;
-           aiMessage.text = aiMessage.accumulatedText;
+        if (stop === 0 || stop === undefined) return;
+
+        const finalize = (extraMd) => {
+          aiMessage.isStreaming = false;
+          if (extraMd) aiMessage.accumulatedText += extraMd;
+          aiMessage.text = aiMessage.accumulatedText;
 
           if (chatInHistory) {
             chatInHistory.lastMessage = aiMessage.accumulatedText.substring(0, 30) + (aiMessage.accumulatedText.length > 30 ? '...' : '');
@@ -629,11 +618,9 @@ const sendMessage = async () => {
         }
 
         if (stop === -1) {
-          // Check if it's a usage limit error
           if (response.msg === 'insufficient user usage limit') {
             try { $toast.error('Usage limit exceeded. Please upgrade your plan.'); } catch {}
             finalize('\n\n> **Error:** Usage limit exceeded. Please upgrade your plan.');
-            // Redirect to pricing page after a short delay
             setTimeout(() => {
               window.location.href = '/pricing';
             }, 2000);
@@ -645,20 +632,20 @@ const sendMessage = async () => {
           return;
         }
 
-             } catch (error) {
-         aiMessage.isStreaming = false;
-         aiMessage.accumulatedText += '\n\n> **Error:** invalid message payload.';
-         try { $toast.error('Failed to parse message'); } catch {}
-         ws.close();
-       }
+      } catch (error) {
+        aiMessage.isStreaming = false;
+        aiMessage.accumulatedText += '\n\n> **Error:** invalid message payload.';
+        try { $toast.error('Failed to parse message'); } catch {}
+        ws.close();
+      }
     };
 
-         ws.onerror = () => {
-       aiMessage.isStreaming = false;
-       aiMessage.accumulatedText += '\n\n> **Error:** connection error.';
-       try { $toast.error('Connection error'); } catch {}
-       ws.close();
-     };
+    ws.onerror = () => {
+      aiMessage.isStreaming = false;
+      aiMessage.accumulatedText += '\n\n> **Error:** connection error.';
+      try { $toast.error('Connection error'); } catch {}
+      ws.close();
+    };
 
   } catch (error) {
     console.error('发送消息失败:', error);
@@ -674,6 +661,11 @@ const handleKeydown = (e) => {
 }
 </script>
 
+<!-- 全局样式：不要 scoped，以便作用到 html/body -->
+<style>
+html, body { overflow-x: clip; } /* 防止偶发的全页横向滚动（比 hidden 更安全） */
+</style>
+
 <style scoped>
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -688,29 +680,27 @@ textarea::-webkit-scrollbar { display: none; }
 }
 @keyframes blink { to { visibility: hidden; } }
 
+/* 关键：去掉 all:revert，保留 border-box，避免因 padding 撑宽 */
 .markdown-body { 
-  all: revert; 
-  overflow-wrap: break-word;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   max-width: 100%;
 }
+.markdown-body * { box-sizing: inherit; }
+
 .markdown-body img {
   max-width: 100%;
   height: auto;
 }
 
-/* ===== 代码块（块级）样式：PC 横向滚动；不撑破气泡 ===== */
-/*
+/* 块级代码：仅自身横向滚动，不撑破气泡 */
 .markdown-body pre { 
-  background-color: #2d2d2d; 
-  color: #f8f8f2; 
-  padding: 1em; 
-  border-radius: 8px; 
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
   max-width: 100%;
-  box-sizing: border-box; 
-  font-family: 'Courier New', Courier, monospace;
+  box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
 }
 .markdown-body pre::-webkit-scrollbar { height: 6px; }
@@ -725,8 +715,8 @@ textarea::-webkit-scrollbar { display: none; }
   word-break: normal;
   overflow-wrap: normal;
   box-sizing: border-box;
+  tab-size: 2;
 }
-*/
 
 /* 行内代码（与块级分离） */
 .markdown-body :not(pre) > code {
@@ -749,7 +739,7 @@ textarea::-webkit-scrollbar { display: none; }
 .markdown-body blockquote { border-left: 4px solid #ccc; padding-left: 1em; margin-left: 0; color: #666; }
 .dark .markdown-body blockquote { border-color: #555; color: #999; }
 
-/* 表格滚动容器 */
+/* 表格滚动容器（保留你原有的自定义表格风格） */
 /* .table-wrapper { overflow-x: auto; width: 100%; } */
 /* .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; } */
 /* .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; } */
