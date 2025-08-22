@@ -198,14 +198,17 @@ const markdownItOptions = {
   linkify: true,
   typographer: true,
   highlight: function (str, lang) {
+    const preClasses = 'overflow-x-auto max-w-full p-3 rounded-lg bg-gray-900 text-gray-100';
+    const codeClasses = 'whitespace-pre';
+
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return '<pre class="hljs"><code>' +
-               hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-               '</code></pre>';
+        const highlightedContent = hljs.highlight(str, { language: lang, ignoreIllegals: true }).value;
+        return `<pre class="${preClasses} hljs"><code class="${codeClasses}">${highlightedContent}</code></pre>`;
       } catch (__) {}
     }
-    return '<pre class="hljs"><code>' + mdUtils.utils.escapeHtml(str) + '</code></pre>';
+    const escapedContent = mdUtils.utils.escapeHtml(str);
+    return `<pre class="${preClasses}"><code class="${codeClasses}">${escapedContent}</code></pre>`;
   }
 };
 
@@ -696,70 +699,46 @@ textarea::-webkit-scrollbar { display: none; }
 }
 
 /* ===== 代码块（块级）样式：PC 横向滚动；不撑破气泡 ===== */
+/*
 .markdown-body pre { 
   background-color: #2d2d2d; 
   color: #f8f8f2; 
   padding: 1em; 
   border-radius: 8px; 
-  overflow-x: auto;          /* 横向滚动条 */
+  overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box; 
-  white-space: pre; 
   font-family: 'Courier New', Courier, monospace;
   -webkit-overflow-scrolling: touch;
 }
-/* 美化横向滚动条 */
 .markdown-body pre::-webkit-scrollbar { height: 6px; }
 .markdown-body pre::-webkit-scrollbar-thumb { background: #666; border-radius: 4px; }
 .dark .markdown-body pre::-webkit-scrollbar-thumb { background: #999; }
-
-/* 移动端：自动换行（若希望移动端也横向滚动，可删除此段） */
-@media (max-width: 768px) {
-  .markdown-body pre {
-    font-size: 0.85rem;
-    padding: 0.75em;
-    white-space: pre-wrap;   /* 自动换行 */
-    word-break: break-word;
-    overflow-x: hidden;      /* 隐藏横向滚动条 */
-  }
-}
 
 .markdown-body pre code { 
   background-color: transparent; 
   padding: 0; 
   display: block; 
-  white-space: inherit; 
+  white-space: pre; 
   word-break: normal;
   overflow-wrap: normal;
   box-sizing: border-box;
 }
+*/
 
 /* 行内代码（与块级分离） */
-.markdown-body p code,
-.markdown-body li code,
-.markdown-body h1 code,
-.markdown-body h2 code,
-.markdown-body h3 code,
-.markdown-body h4 code,
-.markdown-body h5 code,
-.markdown-body h6 code {
+.markdown-body :not(pre) > code {
   font-family: 'Courier New', Courier, monospace;
   background-color: #e0e0e0;
   padding: 0.2em 0.4em;
   border-radius: 4px;
   word-break: break-word;
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
-.dark .markdown-body p code,
-.dark .markdown-body li code,
-.dark .markdown-body h1 code,
-.dark .markdown-body h2 code,
-.dark .markdown-body h3 code,
-.dark .markdown-body h4 code,
-.dark .markdown-body h5 code,
-.dark .markdown-body h6 code {
+.dark .markdown-body :not(pre) > code {
   background-color: #3a3a3a;
 }
 
