@@ -114,7 +114,14 @@
                   <div v-else class="flex flex-col items-start max-w-xl lg:max-w-2xl min-w-0">
                     <div class="rounded-xl p-4 text-base bg-white dark:bg-gray-700 shadow-sm min-w-0" style="max-width: 100%;">
                       <!-- 始终用 renderedHtml，流式边收边渲染 -->
-                      <div class="markdown-body" v-html="message.renderedHtml" style="min-width: 0;"></div>
+                      <ClientOnly>
+                        <vue-markdown
+                          :source="message.accumulatedText || message.text"
+                          class="markdown-body"
+                          :options="markdownItOptions"
+                          :plugins="markdownItPlugins"
+                        />
+                      </ClientOnly>
                       <!-- 打字光标（可选） -->
                       <span v-if="message.isStreaming" class="typing-cursor ml-0.5">|</span>
                     </div>
@@ -162,6 +169,7 @@ import { useNuxtApp } from 'nuxt/app'
 import { ref, nextTick, watch, onMounted, computed, onUnmounted } from 'vue';
 import { useUserStore } from '~/stores/user';
 import { getChatUuid, getChatList, getChatDetails } from '~/api';
+import VueMarkdown from 'vue-markdown-render';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
@@ -183,7 +191,12 @@ const updateScreenWidth = () => {
 };
 
 const { $toast } = useNuxtApp()
-const md = new MarkdownIt({
+
+const mdUtils = new MarkdownIt();
+const markdownItOptions = {
+  html: true,
+  linkify: true,
+  typographer: true,
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -192,17 +205,65 @@ const md = new MarkdownIt({
                '</code></pre>';
       } catch (__) {}
     }
-    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+    return '<pre class="hljs"><code>' + mdUtils.utils.escapeHtml(str) + '</code></pre>';
   }
-});
+};
 
-// Make tables scrollable
-md.renderer.rules.table_open = function () {
-  return '<div class="table-wrapper"><table class="table">';
+const tablePlugin = (md) => {
+  let isInTbody = false;
+
+  md.renderer.rules.table_open = () => {
+    isInTbody = false; // Reset for each table
+    return '<div class="overflow-x-auto my-4 border border-gray-200 dark:border-gray-700 rounded-lg"><table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">';
+  };
+  md.renderer.rules.table_close = () => '</table></div>';
+  
+  md.renderer.rules.thead_open = () => '<thead class="bg-gray-50 dark:bg-gray-800">';
+  
+  md.renderer.rules.tbody_open = () => {
+    isInTbody = true;
+    return '<tbody class="divide-y divide-gray-200 dark:divide-gray-700">';
+  };
+  md.renderer.rules.tbody_close = () => {
+    isInTbody = false;
+    return '</tbody>';
+  };
+  
+  md.renderer.rules.tr_open = () => {
+    if (isInTbody) {
+      return '<tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-100 even:dark:bg-gray-800/50">';
+    }
+    return '<tr>';
+  };
+
+  md.renderer.rules.th_open = (tokens, idx) => {
+    const token = tokens[idx];
+    let alignClass = '';
+    if (token.attrs) {
+      const style = token.attrs.find(attr => attr[0] === 'style');
+      if (style) {
+        if (style[1].includes('text-align:center')) alignClass = 'text-center';
+        if (style[1].includes('text-align:right')) alignClass = 'text-right';
+      }
+    }
+    return `<th scope="col" class="px-4 py-3 text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider ${alignClass || 'text-left'}">`;
+  };
+  
+  md.renderer.rules.td_open = (tokens, idx) => {
+    const token = tokens[idx];
+    let alignClass = '';
+    if (token.attrs) {
+      const style = token.attrs.find(attr => attr[0] === 'style');
+      if (style) {
+        if (style[1].includes('text-align:center')) alignClass = 'text-center';
+        if (style[1].includes('text-align:right')) alignClass = 'text-right';
+      }
+    }
+    return `<td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200 ${alignClass || 'text-left'}">`;
+  };
 };
-md.renderer.rules.table_close = function () {
-  return '</table></div>';
-};
+
+const markdownItPlugins = [tablePlugin];
 
 const copyToClipboard = async (text) => {
   try {
@@ -429,7 +490,6 @@ const loadChat = async (chatId) => {
             isUser: false,
             isStreaming: false,
             accumulatedText: qaPair.msg,
-            renderedHtml: md.render(qaPair.msg),
           };
           return [userMessage, aiMessage];
         });
@@ -499,8 +559,6 @@ const sendMessage = async () => {
       isUser: false,
       isStreaming: true,
       accumulatedText: '',     // 累加中的 Markdown
-      renderedHtml: '',        // 实时渲染出的 HTML
-             // 移除节流定时器，实现真正的流式渲染
     };
     messages.value.push(aiMessage);
     if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(aiMessage);
@@ -528,9 +586,6 @@ const sendMessage = async () => {
             aiMessage.accumulatedText += msg;
             console.log('[Streaming] Accumulated text length:', aiMessage.accumulatedText.length);
             
-            // 强制触发响应式更新 - 使用 triggerRef 确保立即更新
-            aiMessage.renderedHtml = md.render(aiMessage.accumulatedText || '');
-            
             // 强制触发 Vue 响应式更新
             messages.value = [...messages.value];
             
@@ -550,7 +605,6 @@ const sendMessage = async () => {
            aiMessage.isStreaming = false;
            if (extraMd) aiMessage.accumulatedText += extraMd;
            aiMessage.text = aiMessage.accumulatedText;
-           aiMessage.renderedHtml = md.render(aiMessage.accumulatedText || '');
 
           const chat = chatHistory.value.find(c => c.id === currentChatId.value);
           if (chat) {
@@ -586,7 +640,6 @@ const sendMessage = async () => {
              } catch (error) {
          aiMessage.isStreaming = false;
          aiMessage.accumulatedText += '\n\n> **Error:** invalid message payload.';
-         aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
          try { $toast.error('Failed to parse message'); } catch {}
          ws.close();
        }
@@ -595,7 +648,6 @@ const sendMessage = async () => {
          ws.onerror = () => {
        aiMessage.isStreaming = false;
        aiMessage.accumulatedText += '\n\n> **Error:** connection error.';
-       aiMessage.renderedHtml = md.render(aiMessage.accumulatedText);
        try { $toast.error('Connection error'); } catch {}
        ws.close();
      };
@@ -714,10 +766,10 @@ textarea::-webkit-scrollbar { display: none; }
 .dark .markdown-body blockquote { border-color: #555; color: #999; }
 
 /* 表格滚动容器 */
-.table-wrapper { overflow-x: auto; width: 100%; }
-.markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; }
-.markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-.dark .markdown-body th, .dark .markdown-body td { border-color: #444; }
-.markdown-body th { background-color: #f2f2f2; }
-.dark .markdown-body th { background-color: #2d2d2d; }
+/* .table-wrapper { overflow-x: auto; width: 100%; } */
+/* .markdown-body table { border-collapse: collapse; width: 100%; margin: 1em 0; } */
+/* .markdown-body th, .markdown-body td { border: 1px solid #ddd; padding: 8px; text-align: left; } */
+/* .dark .markdown-body th, .dark .markdown-body td { border-color: #444; } */
+/* .markdown-body th { background-color: #f2f2f2; } */
+/* .dark .markdown-body th { background-color: #2d2d2d; } */
 </style>
