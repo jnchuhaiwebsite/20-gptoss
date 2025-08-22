@@ -493,8 +493,8 @@ const loadChat = async (chatId) => {
           };
           return [userMessage, aiMessage];
         });
-        messages.value = allMessages;
         chat.messages = allMessages;
+        messages.value = [...allMessages]; // Use a copy for the reactive display array
       } else {
         messages.value = [{ id: Date.now(), text: 'Failed to load chat history. Please try again later.', isUser: false }];
       }
@@ -514,16 +514,20 @@ const sendMessage = async () => {
   const trimmedMessage = newMessage.value.trim();
   if (!trimmedMessage) return;
 
-  if (!currentChatId.value) {
-    const newChatId = currentGroupId.value;
-    currentChatId.value = newChatId;
+  let activeChatId = currentChatId.value;
+  let activeGroupId = currentGroupId.value;
+
+  // If this is the first message of a new chat, create the chat entry first.
+  if (!activeChatId) {
+    activeChatId = activeGroupId; // Use the pre-generated groupId for the new chat ID
+    currentChatId.value = activeChatId;
     const newChat = {
-      id: newChatId,
+      id: activeChatId,
       title: trimmedMessage.substring(0, 20),
       lastMessage: '',
-      timestamp: formatTimestamp(newChatId),
-      taskId: newChatId,
-      messages: []
+      timestamp: formatTimestamp(activeChatId),
+      taskId: activeChatId,
+      messages: [],
     };
     chatHistory.value.unshift(newChat);
   }
@@ -531,8 +535,10 @@ const sendMessage = async () => {
   const userMessage = { id: Date.now(), text: trimmedMessage, isUser: true };
   messages.value.push(userMessage);
 
-  const chatIndex = chatHistory.value.findIndex(chat => chat.id === currentChatId.value);
-  if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(userMessage);
+  const chatInHistory = chatHistory.value.find(c => c.id === activeChatId);
+  if (chatInHistory) {
+    chatInHistory.messages.push(userMessage);
+  }
 
   newMessage.value = '';
   nextTick(adjustTextareaHeight);
@@ -543,8 +549,7 @@ const sendMessage = async () => {
             if (!uuidResponse?.data?.task_id) throw new Error('Failed to get valid task_id');
     const taskId = uuidResponse.data.task_id;
 
-    const chatId = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-    const groupId = currentGroupId.value;
+    const messageUuid = `chat_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
     const wsBaseUrl = process.env.NODE_ENV === 'development' ? 'wss://art.gptoss2.com' : 'wss://art.gptoss2.com';
     const wsUrl = `${wsBaseUrl}/api/talk/gptoss/chat?task_id=${taskId}`;
@@ -561,12 +566,13 @@ const sendMessage = async () => {
       accumulatedText: '',     // 累加中的 Markdown
     };
     messages.value.push(aiMessage);
-    if (chatIndex !== -1) chatHistory.value[chatIndex].messages.push(aiMessage);
-
-                   // 移除这个函数，直接在 onmessage 中处理
+    
+    if (chatInHistory) {
+      chatInHistory.messages.push(aiMessage);
+    }
 
     ws.onopen = () => {
-      const chatRequest = { input: trimmedMessage, uuid: chatId, group_id: groupId };
+      const chatRequest = { input: trimmedMessage, uuid: messageUuid, group_id: activeGroupId };
       ws.send(JSON.stringify(chatRequest));
     };
 
@@ -606,10 +612,9 @@ const sendMessage = async () => {
            if (extraMd) aiMessage.accumulatedText += extraMd;
            aiMessage.text = aiMessage.accumulatedText;
 
-          const chat = chatHistory.value.find(c => c.id === currentChatId.value);
-          if (chat) {
-            chat.lastMessage = aiMessage.accumulatedText.substring(0, 30) + (aiMessage.accumulatedText.length > 30 ? '...' : '');
-            chat.timestamp = formatTimestamp(`group_${Date.now()}`);
+          if (chatInHistory) {
+            chatInHistory.lastMessage = aiMessage.accumulatedText.substring(0, 30) + (aiMessage.accumulatedText.length > 30 ? '...' : '');
+            chatInHistory.timestamp = formatTimestamp(`group_${Date.now()}`);
           }
           nextTick(debouncedScrollToBottom);
           ws.close();
