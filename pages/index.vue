@@ -20,7 +20,7 @@
       <!-- <PromptSolutions /> -->
       
       <!-- 套餐价格 -->
-      <GptOssPricing />
+      <PricingPlans />
 
       <!-- 常见问题 -->
       <GptOssFaq />
@@ -43,7 +43,7 @@ import GptOssIntro from '~/components/GptOssIntro.vue'
 import GptOssForWhom from '~/components/GptOssForWhom.vue'
 import GptOssAdvantages from '~/components/GptOssAdvantages.vue'
 import ModelComparisonTable from '~/components/ModelComparisonTable.vue'
-import GptOssPricing from '~/components/GptOssPricing.vue'
+import PricingPlans from '~/components/PricingPlans.vue'
 import GptOssFaq from '~/components/GptOssFaq.vue'
 
 const { $toast } = useNuxtApp() as any

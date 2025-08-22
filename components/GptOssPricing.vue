@@ -9,33 +9,44 @@
         <thead>
           <tr>
             <th>Plan Type</th>
-            <th>Features</th>
+            <th>Input Tokens</th>
+            <th>Output Tokens</th>
+            <th>Bonus Credits</th>
             <th>Price</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Free Plan</strong></td>
-            <td>Free credits on signup to experience gpt-oss; Access to public Prompt Template Library.</td>
+            <td>10K</td>
+            <td>30K</td>
+            <td>Free credits on signup</td>
             <td><strong>Free</strong></td>
           </tr>
           <tr>
             <td><strong>Basic Plan</strong></td>
-            <td>Generous monthly chat allowance; Use of Prompt Templates and Generator.</td>
-            <td><strong>$10 / month</strong></td>
+            <td>500K</td>
+            <td>1.2M</td>
+            <td>Credit bonus included</td>
+            <td><strong>$1</strong></td>
           </tr>
           <tr>
             <td><strong>Pro Plan</strong></td>
-            <td>RAG support, custom Prompt management, chat history export, and priority support.</td>
-            <td><strong>$30 / month</strong></td>
+            <td>6M</td>
+            <td>14M</td>
+            <td>Credit bonus included</td>
+            <td><strong>$10</strong></td>
           </tr>
           <tr>
-            <td><strong>Super Plan</strong></td>
-            <td>Prompt Fine-Tuning services, industry knowledge base integration, and a dedicated SLA.</td>
-            <td><strong>$99 / month</strong></td>
+            <td><strong>Ultra Plan</strong></td>
+            <td>20M</td>
+            <td>46M</td>
+            <td>Credit bonus included</td>
+            <td><strong>$30</strong></td>
           </tr>
         </tbody>
       </table>
+      <p class="note">* All plans are one-time purchases. Tokens never expire.</p>
     </div>
   </section>
 </template>
@@ -116,6 +127,13 @@ h2 {
 
 .styled-table td:last-child {
   white-space: nowrap;
+}
+
+.bonus {
+  color: #007bff;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

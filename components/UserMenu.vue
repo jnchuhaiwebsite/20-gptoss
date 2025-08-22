@@ -49,7 +49,17 @@
 
 
             <!-- 我的积分 -->
-
+            <div class="px-4 py-2 text-sm text-gray-700">
+              <div class="flex justify-between items-center">
+                <span>Input Token:</span>
+                <span class="font-semibold text-blue-600">{{ userStore.userInfo?.user_limit?.input_remaining_limit || '0' }}</span>
+              </div>
+              <div class="flex justify-between items-center mt-1">
+                <span>Output Token:</span>
+                <span class="font-semibold text-green-600">{{ userStore.userInfo?.user_limit?.output_remaining_limit || '0' }}</span>
+              </div>
+            </div>
+           
           </div>
 
           <!-- 退出按钮 -->
@@ -113,7 +123,17 @@
             {{ userDisplay?.email }}
           </p>
           
-         
+          <!-- 移动端积分显示 -->
+          <div class="mt-2 text-xs text-gray-600 space-y-1">
+            <div class="flex justify-between items-center">
+              <span>输入Token:</span>
+              <span class="font-semibold text-blue-600">{{ userStore.userInfo?.user_limit?.input_remaining_limit || '0' }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span>输出Token:</span>
+              <span class="font-semibold text-green-600">{{ userStore.userInfo?.user_limit?.output_remaining_limit || '0' }}</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -306,6 +326,7 @@ onMounted(async () => {
         user.fullName || '';
 
       const token = await getToken.value();
+
       setUserInfo({
         uuid: user.id,
         email,

@@ -29,6 +29,7 @@ export const useUserStore = defineStore('user', () => {
 
   // 获取用户信息
   const fetchUserInfo = async (force = false) => {
+    
     // 检查是否已登录，未登录则不发送请求
     if (!isLoggedIn()) {
       return null
